@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<script type="text/javascript">
+  WebFontConfig = {"google":{"families":["Cabin:b:latin,latin-ext","Karla:r,i,b,bi:latin,latin-ext"]}};
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://s0.wp.com/wp-content/plugins/custom-fonts/js/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+	})();
+</script><style id="jetpack-custom-fonts-css"></style>
+<meta content="max-image-preview:large" name="robots"/>
+<meta content="G-VFK22ENTRM" name="google-site-verification"/>
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=16439'
+					+ '&is_singular=1';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9yYy1zY2VuZS5jb20%3D"
+		+ "&wpcomid=172868107"
+		+ "&time=1649585942";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<title>2 years RC SCENE &amp; Emergency Response Plan Update – RC SCENE – Safe NOT Scam! Research Chemicals</title>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../index.html" rel="dns-prefetch"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Comments Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » 2 years RC SCENE &amp; Emergency Response Plan Update Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script>
+window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.9.3"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s2.wp.com/_static/??-eJx9y0EOgkAMheELOTaEBGRhPMtQGx2mnWlsCeH2oksWs/zz3gebBqzFqTjIGpTXVyoGm2KV4G8SOmbR6DBzxTxHoyuaXaDlTBLTfqoW+xBHp2fQan6qFuOUyWAh14g5/Ot3f8i9G/pp7G/dMC1fNfNUdQ==?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="wp-block-site-logo-inline-css">
+.wp-block-site-logo{line-height:0}.wp-block-site-logo a{display:inline-block}.wp-block-site-logo.is-default-size img{height:auto;width:120px}.wp-block-site-logo a,.wp-block-site-logo img{border-radius:inherit}.wp-block-site-logo.aligncenter{margin-left:auto;margin-right:auto;text-align:center}.wp-block-site-logo.is-style-rounded{border-radius:9999px}
+</style>
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}
+</style>
+<style id="wp-block-navigation-link-inline-css">
+.wp-block-navigation .wp-block-navigation-item__label{overflow-wrap:break-word;word-break:normal}
+</style>
+<link href="https://s0.wp.com/wp-content/plugins/gutenberg-core/v12.9.0/build/block-library/blocks/navigation/style.css?m=1648654632h&amp;cssminify=yes" id="all-css-12-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="wp-block-spacer-inline-css">
+.wp-block-spacer{clear:both}
+</style>
+<style id="wp-block-post-title-inline-css">
+.wp-block-post-title{word-break:break-word}.wp-block-post-title a{display:inline-block}
+</style>
+<style id="wp-block-post-featured-image-inline-css">
+.wp-block-post-featured-image{margin-left:0;margin-right:0}.wp-block-post-featured-image a{display:block}.wp-block-post-featured-image img{height:auto;max-width:100%;vertical-align:bottom;width:100%}.wp-block-post-featured-image.alignfull img,.wp-block-post-featured-image.alignwide img{width:100%}
+</style>
+<style id="wp-block-image-inline-css">
+.wp-block-image{margin:0 0 1em}.wp-block-image img{height:auto;max-width:100%;vertical-align:bottom}.wp-block-image:not(.is-style-rounded)>a,.wp-block-image:not(.is-style-rounded) img{border-radius:inherit}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image.aligncenter,.wp-block-image .aligncenter,.wp-block-image.alignleft,.wp-block-image .alignleft,.wp-block-image.alignright,.wp-block-image .alignright{display:table}.wp-block-image.aligncenter>figcaption,.wp-block-image .aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image.alignright>figcaption,.wp-block-image .alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image figcaption{margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img,.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}.wp-block-image figure{margin:0}
+</style>
+<style id="wp-block-heading-inline-css">
+h1,h2,h3,h4,h5,h6{overflow-wrap:break-word}h1.has-background,h2.has-background,h3.has-background,h4.has-background,h5.has-background,h6.has-background{padding:1.25em 2.375em}
+</style>
+<style id="wp-block-paragraph-inline-css">
+.is-small-text{font-size:.875em}.is-regular-text{font-size:1em}.is-large-text{font-size:2.25em}.is-larger-text{font-size:3em}.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;font-style:normal;font-weight:100;line-height:.68;margin:.05em .1em 0 0;text-transform:uppercase}p{overflow-wrap:break-word}p.has-drop-cap.has-background{overflow:hidden}p.has-background{padding:1.25em 2.375em}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}
+</style>
+<style id="wp-block-pullquote-inline-css">
+.wp-block-pullquote{box-sizing:border-box;margin:0 0 1em;overflow-wrap:break-word;padding:3em 0;text-align:center}.wp-block-pullquote blockquote,.wp-block-pullquote cite,.wp-block-pullquote p{color:inherit}.wp-block-pullquote.alignleft,.wp-block-pullquote.alignright,.wp-block-pullquote.has-text-align-left,.wp-block-pullquote.has-text-align-right{max-width:420px}.wp-block-pullquote.alignleft p,.wp-block-pullquote.alignright p,.wp-block-pullquote.has-text-align-left p,.wp-block-pullquote.has-text-align-right p{font-size:1.25em}.wp-block-pullquote p{font-size:1.75em;line-height:1.6}.wp-block-pullquote cite,.wp-block-pullquote footer{position:relative}.wp-block-pullquote .has-text-color a{color:inherit}.wp-block-pullquote.has-text-align-left blockquote{text-align:left}.wp-block-pullquote.has-text-align-right blockquote{text-align:right}.wp-block-pullquote.is-style-solid-color{border:none}.wp-block-pullquote.is-style-solid-color blockquote{margin-left:auto;margin-right:auto;max-width:60%}.wp-block-pullquote.is-style-solid-color blockquote p{font-size:2em;margin-bottom:0;margin-top:0}.wp-block-pullquote.is-style-solid-color blockquote cite{font-style:normal;text-transform:none}.wp-block-pullquote cite{color:inherit}
+</style>
+<style id="wp-block-columns-inline-css">
+.wp-block-columns{align-items:normal!important;box-sizing:border-box;display:flex;flex-wrap:wrap!important;margin-bottom:1.75em}@media (min-width:782px){.wp-block-columns{flex-wrap:nowrap!important}}.wp-block-columns.are-vertically-aligned-top{align-items:flex-start}.wp-block-columns.are-vertically-aligned-center{align-items:center}.wp-block-columns.are-vertically-aligned-bottom{align-items:flex-end}@media (max-width:781px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:100%!important}}@media (min-width:782px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column[style*=flex-basis]{flex-grow:0}}.wp-block-columns.is-not-stacked-on-mobile{flex-wrap:nowrap!important}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column[style*=flex-basis]{flex-grow:0}:where(.wp-block-columns.has-background){padding:1.25em 2.375em}.wp-block-column{flex-grow:1;min-width:0;overflow-wrap:break-word;word-break:break-word}.wp-block-column.is-vertically-aligned-top{align-self:flex-start}.wp-block-column.is-vertically-aligned-center{align-self:center}.wp-block-column.is-vertically-aligned-bottom{align-self:flex-end}.wp-block-column.is-vertically-aligned-bottom,.wp-block-column.is-vertically-aligned-center,.wp-block-column.is-vertically-aligned-top{width:100%}
+</style>
+<style id="wp-block-list-inline-css">
+ol,ul{overflow-wrap:break-word}ol.has-background,ul.has-background{padding:1.25em 2.375em}
+</style>
+<style id="wp-block-embed-inline-css">
+.wp-block-embed.alignleft,.wp-block-embed.alignright,.wp-block[data-align=left]>[data-type="core/embed"],.wp-block[data-align=right]>[data-type="core/embed"]{max-width:360px;width:100%}.wp-block-embed.alignleft .wp-block-embed__wrapper,.wp-block-embed.alignright .wp-block-embed__wrapper,.wp-block[data-align=left]>[data-type="core/embed"] .wp-block-embed__wrapper,.wp-block[data-align=right]>[data-type="core/embed"] .wp-block-embed__wrapper{min-width:280px}.wp-block-cover .wp-block-embed{min-height:240px;min-width:320px}.wp-block-embed{margin:0 0 1em;overflow-wrap:break-word}.wp-block-embed figcaption{margin-bottom:1em;margin-top:.5em}.wp-block-embed iframe{max-width:100%}.wp-block-embed__wrapper{position:relative}.wp-embed-responsive .wp-has-aspect-ratio .wp-block-embed__wrapper:before{content:"";display:block;padding-top:50%}.wp-embed-responsive .wp-has-aspect-ratio iframe{bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.wp-embed-responsive .wp-embed-aspect-21-9 .wp-block-embed__wrapper:before{padding-top:42.85%}.wp-embed-responsive .wp-embed-aspect-18-9 .wp-block-embed__wrapper:before{padding-top:50%}.wp-embed-responsive .wp-embed-aspect-16-9 .wp-block-embed__wrapper:before{padding-top:56.25%}.wp-embed-responsive .wp-embed-aspect-4-3 .wp-block-embed__wrapper:before{padding-top:75%}.wp-embed-responsive .wp-embed-aspect-1-1 .wp-block-embed__wrapper:before{padding-top:100%}.wp-embed-responsive .wp-embed-aspect-9-16 .wp-block-embed__wrapper:before{padding-top:177.77%}.wp-embed-responsive .wp-embed-aspect-1-2 .wp-block-embed__wrapper:before{padding-top:200%}
+</style>
+<link href="https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/swiper-bundle.css,/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1630955947j&amp;cssminify=yes" id="all-css-36-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="wp-block-post-author-inline-css">
+.wp-block-post-author{display:flex;flex-wrap:wrap}.wp-block-post-author__byline{font-size:.5em;margin-bottom:0;margin-top:0;width:100%}.wp-block-post-author__avatar{margin-right:1em}.wp-block-post-author__bio{font-size:.7em;margin-bottom:.7em}.wp-block-post-author__content{flex-basis:0;flex-grow:1}.wp-block-post-author__name{margin:0}
+</style>
+<style id="wp-block-post-terms-inline-css">
+.wp-block-post-terms__separator{white-space:pre-wrap}
+</style>
+<style id="wp-block-post-comments-inline-css">
+.wp-block-post-comments>h3:first-of-type{margin-top:0}.wp-block-post-comments .commentlist{list-style:none;margin:0;padding:0}.wp-block-post-comments .commentlist .comment{min-height:2.25em;padding-left:3.25em}.wp-block-post-comments .commentlist .comment p{font-size:1em;line-height:1.8;margin:1em 0}.wp-block-post-comments .commentlist .children{list-style:none;margin:0;padding:0}.wp-block-post-comments .comment-author{line-height:1.5}.wp-block-post-comments .comment-author .avatar{border-radius:1.5em;display:block;float:left;height:2.5em;margin-right:.75em;margin-top:.5em;width:2.5em}.wp-block-post-comments .comment-author cite{font-style:normal}.wp-block-post-comments .comment-meta{font-size:.875em;line-height:1.5;margin-left:-3.25em}.wp-block-post-comments .comment-meta b{font-weight:400}.wp-block-post-comments .comment-body .commentmetadata{font-size:.875em}.wp-block-post-comments .comment-form-author label,.wp-block-post-comments .comment-form-comment label,.wp-block-post-comments .comment-form-email label,.wp-block-post-comments .comment-form-url label{display:block;margin-bottom:.25em}.wp-block-post-comments .comment-form input:not([type=submit]):not([type=checkbox]),.wp-block-post-comments .comment-form textarea{box-sizing:border-box;display:block;width:100%}.wp-block-post-comments .comment-form-cookies-consent{display:flex;gap:.25em}.wp-block-post-comments .comment-form-cookies-consent #wp-comment-cookies-consent{margin-top:.35em}.wp-block-post-comments .reply{font-size:.875em;margin-bottom:1.4em}.wp-block-post-comments input:not([type=submit]),.wp-block-post-comments textarea{border:1px solid #949494;font-family:inherit;font-size:1em}.wp-block-post-comments input:not([type=submit]):not([type=checkbox]),.wp-block-post-comments textarea{padding:calc(.667em + 2px)}.wp-block-post-comments input[type=submit]{border:none}
+</style>
+<style id="wp-block-buttons-inline-css">
+.wp-block-buttons.is-vertical{flex-direction:column}.wp-block-buttons.is-vertical>.wp-block-button:last-child{margin-bottom:0}.wp-block-buttons>.wp-block-button{display:inline-block;margin:0}.wp-block-buttons.is-content-justification-left{justify-content:flex-start}.wp-block-buttons.is-content-justification-left.is-vertical{align-items:flex-start}.wp-block-buttons.is-content-justification-center{justify-content:center}.wp-block-buttons.is-content-justification-center.is-vertical{align-items:center}.wp-block-buttons.is-content-justification-right{justify-content:flex-end}.wp-block-buttons.is-content-justification-right.is-vertical{align-items:flex-end}.wp-block-buttons.is-content-justification-space-between{justify-content:space-between}.wp-block-buttons.aligncenter{text-align:center}.wp-block-buttons:not(.is-content-justification-space-between,.is-content-justification-right,.is-content-justification-left,.is-content-justification-center) .wp-block-button.aligncenter{margin-left:auto;margin-right:auto;width:100%}.wp-block-button.aligncenter{text-align:center}
+</style>
+<style id="wp-block-button-inline-css">
+.wp-block-button__link{background-color:#32373c;border-radius:9999px;box-shadow:none;box-sizing:border-box;color:#fff;cursor:pointer;display:inline-block;font-size:1.125em;padding:calc(.667em + 2px) calc(1.333em + 2px);text-align:center;text-decoration:none;word-break:break-word}.wp-block-button__link:active,.wp-block-button__link:focus,.wp-block-button__link:hover,.wp-block-button__link:visited{color:#fff}.wp-block-button__link.aligncenter{text-align:center}.wp-block-button__link.alignright{text-align:right}.wp-block-buttons>.wp-block-button.has-custom-width{max-width:none}.wp-block-buttons>.wp-block-button.has-custom-width .wp-block-button__link{width:100%}.wp-block-buttons>.wp-block-button.has-custom-font-size .wp-block-button__link{font-size:inherit}.wp-block-buttons>.wp-block-button.wp-block-button__width-25{width:calc(25% - var(--wp--style--block-gap, .5em)*.75)}.wp-block-buttons>.wp-block-button.wp-block-button__width-50{width:calc(50% - var(--wp--style--block-gap, .5em)*.5)}.wp-block-buttons>.wp-block-button.wp-block-button__width-75{width:calc(75% - var(--wp--style--block-gap, .5em)*.25)}.wp-block-buttons>.wp-block-button.wp-block-button__width-100{flex-basis:100%;width:100%}.wp-block-buttons.is-vertical>.wp-block-button.wp-block-button__width-25{width:25%}.wp-block-buttons.is-vertical>.wp-block-button.wp-block-button__width-50{width:50%}.wp-block-buttons.is-vertical>.wp-block-button.wp-block-button__width-75{width:75%}.wp-block-button.is-style-squared,.wp-block-button__link.wp-block-button.is-style-squared{border-radius:0}.wp-block-button.no-border-radius,.wp-block-button__link.no-border-radius{border-radius:0!important}.is-style-outline>:where(.wp-block-button__link),:where(.wp-block-button__link).is-style-outline{border:2px solid;padding:.667em 1.333em}.is-style-outline>.wp-block-button__link:not(.has-text-color),.wp-block-button__link.is-style-outline:not(.has-text-color){color:currentColor}.is-style-outline>.wp-block-button__link:not(.has-background),.wp-block-button__link.is-style-outline:not(.has-background){background-color:transparent}
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,161;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}.has-text-align-center{text-align:center}.has-text-align-left{text-align:left}.has-text-align-right{text-align:right}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{clip:rect(1px,1px,1px,1px);word-wrap:normal!important;border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{clip:auto!important;background-color:#ddd;-webkit-clip-path:none;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-width]){border-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link href="https://s0.wp.com/wp-content/plugins/coblocks/2.18.1-simple-rev.1/dist/coblocks-style.css?m=1645657103h&amp;cssminify=yes" id="all-css-52-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="global-styles-inline-css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--primary: #dd3333;--wp--preset--color--secondary: #006ba1;--wp--preset--color--foreground: #333333;--wp--preset--color--background: #ffffff;--wp--preset--color--tertiary: #F0F0F0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 1rem;--wp--preset--font-size--medium: 1.5rem;--wp--preset--font-size--large: 1.75rem;--wp--preset--font-size--x-large: 2rem;--wp--preset--font-family--body-font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;--wp--preset--font-family--heading-font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;--wp--custom--alignment--aligned-max-width: 50%;--wp--custom--button--border--color: var(--wp--custom--color--primary);--wp--custom--button--border--radius: 4px;--wp--custom--button--border--style: solid;--wp--custom--button--border--width: 2px;--wp--custom--button--color--background: var(--wp--custom--color--primary);--wp--custom--button--color--text: var(--wp--custom--color--background);--wp--custom--button--hover--color--text: var(--wp--custom--color--background);--wp--custom--button--hover--color--background: var(--wp--custom--color--secondary);--wp--custom--button--hover--border--color: var(--wp--custom--color--secondary);--wp--custom--button--spacing--padding--top: 0.667em;--wp--custom--button--spacing--padding--bottom: 0.667em;--wp--custom--button--spacing--padding--left: 1.333em;--wp--custom--button--spacing--padding--right: 1.333em;--wp--custom--button--typography--font-size: var(--wp--custom--font-sizes--normal);--wp--custom--button--typography--font-weight: normal;--wp--custom--button--typography--line-height: 2;--wp--custom--color--foreground: var(--wp--preset--color--foreground);--wp--custom--color--background: var(--wp--preset--color--background);--wp--custom--color--primary: var(--wp--preset--color--primary);--wp--custom--color--secondary: var(--wp--preset--color--secondary);--wp--custom--color--tertiary: var(--wp--preset--color--tertiary);--wp--custom--color-palettes--0--label: Featured;--wp--custom--color-palettes--0--slug: palette-1;--wp--custom--color-palettes--0--colors--primary: #C8133E;--wp--custom--color-palettes--0--colors--secondary: #4E2F4B;--wp--custom--color-palettes--0--colors--foreground: #1D1E1E;--wp--custom--color-palettes--0--colors--background: #FFFFFF;--wp--custom--color-palettes--0--colors--tertiary: #F9F9F9;--wp--custom--color-palettes--1--label: Featured;--wp--custom--color-palettes--1--slug: palette-2;--wp--custom--color-palettes--1--colors--primary: #35845D;--wp--custom--color-palettes--1--colors--secondary: #233252;--wp--custom--color-palettes--1--colors--foreground: #242527;--wp--custom--color-palettes--1--colors--background: #EEF4F7;--wp--custom--color-palettes--1--colors--tertiary: #F9F9F9;--wp--custom--color-palettes--2--label: Featured;--wp--custom--color-palettes--2--slug: palette-3;--wp--custom--color-palettes--2--colors--primary: #9FD3E8;--wp--custom--color-palettes--2--colors--secondary: #FBE6AA;--wp--custom--color-palettes--2--colors--foreground: #FFFFFF;--wp--custom--color-palettes--2--colors--background: #1F2527;--wp--custom--color-palettes--2--colors--tertiary: #364043;--wp--custom--font-sizes--x-small: 0.875rem;--wp--custom--font-sizes--normal: 1.125rem;--wp--custom--font-sizes--huge: 3rem;--wp--custom--form--padding: calc( 0.5 * var(--wp--custom--gap--horizontal) );--wp--custom--form--border--color: #EFEFEF;--wp--custom--form--border--radius: 0;--wp--custom--form--border--style: solid;--wp--custom--form--border--width: 2px;--wp--custom--form--checkbox--checked--content: "\2715";--wp--custom--form--checkbox--checked--font-size: var(--wp--custom--font-sizes--x-small);--wp--custom--form--checkbox--checked--position--left: 3px;--wp--custom--form--checkbox--checked--position--top: 3px;--wp--custom--form--checkbox--checked--sizing--height: 12px;--wp--custom--form--checkbox--checked--sizing--width: 12px;--wp--custom--form--checkbox--unchecked--content: "";--wp--custom--form--checkbox--unchecked--position--left: 0;--wp--custom--form--checkbox--unchecked--position--top: 0.2em;--wp--custom--form--checkbox--unchecked--sizing--height: 16px;--wp--custom--form--checkbox--unchecked--sizing--width: 16px;--wp--custom--form--color--background: transparent;--wp--custom--form--color--box-shadow: none;--wp--custom--form--color--text: inherit;--wp--custom--form--label--spacing--margin--bottom: var(--wp--custom--gap--baseline);--wp--custom--form--label--typography--font-size: var(--wp--custom--font-sizes--x-small);--wp--custom--form--label--typography--font-weight: normal;--wp--custom--form--label--typography--letter-spacing: normal;--wp--custom--form--label--typography--text-transform: none;--wp--custom--form--typography--font-size: var(--wp--custom--font-sizes--normal);--wp--custom--gallery--caption--font-size: var(--wp--preset--font-size--small);--wp--custom--body--typography--line-height: 1.6;--wp--custom--heading--typography--font-weight: 400;--wp--custom--heading--typography--line-height: 1.125;--wp--custom--latest-posts--meta--color--text: var(--wp--custom--color--primary);--wp--custom--layout--content-size: 620px;--wp--custom--gap--baseline: 15px;--wp--custom--gap--horizontal: min(30px, 5vw);--wp--custom--gap--vertical: min(30px, 5vw);--wp--custom--navigation--submenu--border--color: var(--wp--custom--color--primary);--wp--custom--navigation--submenu--border--radius: var(--wp--custom--form--border--radius);--wp--custom--navigation--submenu--border--style: var(--wp--custom--form--border--style);--wp--custom--navigation--submenu--border--width: var(--wp--custom--form--border--width);--wp--custom--navigation--submenu--color--background: var(--wp--custom--color--background);--wp--custom--navigation--submenu--color--text: var(--wp--custom--color--foreground);--wp--custom--paragraph--dropcap--margin: .1em .1em 0 0;--wp--custom--paragraph--dropcap--typography--font-size: 110px;--wp--custom--paragraph--dropcap--typography--font-weight: 400;--wp--custom--post-author--typography--font-weight: normal;--wp--custom--post-comment--typography--font-size: var(--wp--custom--font-sizes--normal);--wp--custom--post-comment--typography--line-height: var(--wp--custom--body--typography--line-height);--wp--custom--pullquote--citation--typography--font-size: var(--wp--custom--font-sizes--x-small);--wp--custom--pullquote--citation--typography--font-family: inherit;--wp--custom--pullquote--citation--typography--font-style: italic;--wp--custom--pullquote--citation--spacing--margin--top: var(--wp--custom--gap--vertical);--wp--custom--pullquote--typography--text-align: left;--wp--custom--quote--citation--typography--font-size: var(--wp--custom--font-sizes--x-small);--wp--custom--quote--citation--typography--font-style: italic;--wp--custom--quote--citation--typography--font-weight: 400;--wp--custom--quote--typography--text-align: left;--wp--custom--separator--opacity: 1;--wp--custom--separator--width: 150px;--wp--custom--table--figcaption--typography--font-size: var(--wp--custom--font-sizes--x-small);--wp--custom--video--caption--text-align: center;--wp--custom--video--caption--margin: var(--wp--custom--gap--vertical) auto;}body { margin: 0; }body{background-color: var(--wp--custom--color--background);color: var(--wp--custom--color--foreground);font-family: var(--wp--preset--font-family--body-font);font-size: var(--wp--custom--font-sizes--normal);line-height: var(--wp--custom--body--typography--line-height);--wp--style--block-gap: calc(2 * var(--wp--custom--gap--baseline));}.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }.wp-site-blocks > * { margin-block-start: 0; margin-block-end: 0; }.wp-site-blocks > * + * { margin-block-start: var( --wp--style--block-gap ); }h1{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--custom--font-sizes--huge);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}h2{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--preset--font-size--x-large);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}h3{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--preset--font-size--large);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}h4{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--preset--font-size--medium);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}h5{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--custom--font-sizes--normal);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}h6{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--preset--font-size--small);font-weight: var(--wp--custom--heading--typography--font-weight);line-height: var(--wp--custom--heading--typography--line-height);margin-top: var(--wp--custom--gap--vertical);margin-bottom: var(--wp--custom--gap--vertical);}a{color: var(--wp--custom--color--primary);}.wp-block-button__link{background-color: var(--wp--custom--button--color--background);border-radius: var(--wp--custom--button--border--radius);color: var(--wp--custom--button--color--text);font-family: var(--wp--preset--font-family--body-font);font-size: var(--wp--custom--button--typography--font-size);font-weight: var(--wp--custom--button--typography--font-weight);line-height: var(--wp--custom--button--typography--line-height);}.wp-block-code{border-radius: 0px;border-color: #CCCCCC;border-width: 2px;border-style: solid;font-family: monospace;padding-top: var(--wp--custom--gap--vertical);padding-right: var(--wp--custom--gap--horizontal);padding-bottom: var(--wp--custom--gap--vertical);padding-left: var(--wp--custom--gap--horizontal);}.wp-block-gallery{margin-bottom: var(--wp--custom--gap--vertical);}ol,ul{padding-left: calc( 2 * var(--wp--custom--gap--horizontal) );}.wp-block-navigation{font-size: var(--wp--custom--font-sizes--normal);}.wp-block-post-title{font-family: var(--wp--preset--font-family--heading-font);font-size: var(--wp--preset--font-size--large);line-height: var(--wp--custom--heading--typography--line-height);margin-bottom: 0;}.wp-block-post-date{color: var(--wp--custom--color--foreground);font-size: var(--wp--preset--font-size--small);}.wp-block-pullquote{border-width: 1px 0;border-style: solid;font-size: var(--wp--preset--font-size--large);font-style: italic;padding-top: var(--wp--custom--gap--horizontal);padding-right: var(--wp--custom--gap--horizontal);padding-bottom: var(--wp--custom--gap--horizontal);padding-left: var(--wp--custom--gap--horizontal);}.wp-block-search{font-size: var(--wp--custom--button--typography--font-size);line-height: var(--wp--custom--body--typography--line-height);}.wp-block-separator{border-color: currentColor;border-width: 0 0 1px 0;border-style: solid;color: var(--wp--custom--color--foreground);}.wp-block-quote{border-color: var(--wp--custom--color--primary);border-width: 0 0 0 1px;border-style: solid;font-size: var(--wp--custom--font-sizes--normal);font-style: normal;padding-left: var(--wp--custom--gap--horizontal);}.wp-block-site-tagline{font-size: var(--wp--custom--font-sizes--x-small);}.wp-block-site-title{font-size: var(--wp--custom--font-sizes--normal);font-weight: 700;text-decoration: none;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-color{color: var(--wp--preset--color--primary) !important;}.has-secondary-color{color: var(--wp--preset--color--secondary) !important;}.has-foreground-color{color: var(--wp--preset--color--foreground) !important;}.has-background-color{color: var(--wp--preset--color--background) !important;}.has-tertiary-color{color: var(--wp--preset--color--tertiary) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-background-color{background-color: var(--wp--preset--color--primary) !important;}.has-secondary-background-color{background-color: var(--wp--preset--color--secondary) !important;}.has-foreground-background-color{background-color: var(--wp--preset--color--foreground) !important;}.has-background-background-color{background-color: var(--wp--preset--color--background) !important;}.has-tertiary-background-color{background-color: var(--wp--preset--color--tertiary) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-border-color{border-color: var(--wp--preset--color--primary) !important;}.has-secondary-border-color{border-color: var(--wp--preset--color--secondary) !important;}.has-foreground-border-color{border-color: var(--wp--preset--color--foreground) !important;}.has-background-border-color{border-color: var(--wp--preset--color--background) !important;}.has-tertiary-border-color{border-color: var(--wp--preset--color--tertiary) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-body-font-font-family{font-family: var(--wp--preset--font-family--body-font) !important;}.has-heading-font-font-family{font-family: var(--wp--preset--font-family--heading-font) !important;}
+</style>
+<link href="https://s0.wp.com/_static/??-eJx9j1kOwjAMRC9EsIpYygfiLElwg2k21Ykqbo9LJRCL+mN5Rn4eG8asbIoFY4FQVfbVUWSwaUDxQ9YFZCLghTR6DDK2tswr+I+NWRhlTB6QWUkNVIMqVwF5iRNqWq089SiKv5wZJYipkND8an52zlGQqwHjk+2NZgTNjEXMFO8deb90iMOkhNOFUvwQqvOahiV0QEl00rrnA285QedwavbbY9Me2t3m9gCXKYwR?cssminify=yes" id="all-css-54-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="jetpack-global-styles-frontend-style-inline-css">
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link href="https://s1.wp.com/_static/??-eJxti0EKgCAQAD+UbVFGHaK3mJgaqyut0vejQ4eo0zAwA2cSmmI2MUMoImGxPjIk4iw2VP4Adurw0T6sNXMF/xeT9goFkqW3fKbsTDAMrgeLtCq8gyXM7dCNUjZy6vcLZTc31Q==?cssminify=yes" id="all-css-56-1" media="all" rel="stylesheet" type="text/css"/>
+<script id="media-video-widget-extensions-js-extra">
+var videopressAjax = {"ajaxUrl":"https:\/\/researchchemicalscene.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/s2.wp.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js"};
+</script>
+<script id="wpcom-actionbar-placeholder-js-extra">
+var actionbardata = {"siteID":"172868107","siteURL":"https:\/\/rc-scene.com","xhrURL":"https:\/\/rc-scene.com\/wp-admin\/admin-ajax.php","nonce":"f2f69bbbb2","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/pbHkTh-4h9","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar"}};
+</script>
+<script crossorigin="anonymous" src="https://s0.wp.com/_static/??-eJydUdFOwzAM/CFSU1ah7gHxKShtvOAutavE6ba/x6ANVWJ74SWSc747+wynxY3CiqwwV7ekGokLrBRQloylwLStnMoR2Q2ZQsRmKk+w4VvnLAMldLVg9tH+HPFBbn3EY6oBCwxJxmMB9itFryRsDnhqZuI7kjmpW7KcL39kDAxUFFbkIBkymqP5qmSXKyvNuJV8RDNokXQ5UEr3JrglEquVA+ZoSEZY25dm3zzDUCkF+BSxfYgDnv+tQW3PjyU2t5lQFz8e3fdjIRewdEIdf3K8Yh/X3XxVmb0qjb8sXwpq2Xi6JD5gNsP3+a197fa7ruv7dvoCrTXHUg==" type="text/javascript"></script>
+<script type="text/javascript">
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<script type="text/javascript">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type="text/javascript">
+wp.jpI18nLoader.state = {"baseUrl":"https://widgets.wp.com/languages/","locale":"en_US","domainMap":{"jetpack-backup-pkg":"plugins/jetpack","jetpack-compat":"plugins/jetpack","jetpack-heartbeat":"plugins/jetpack","jetpack-licensing":"plugins/jetpack","jetpack-password-checker":"plugins/jetpack","jetpack-plugins-installer":"plugins/jetpack","jetpack-post-list":"plugins/jetpack","jetpack-admin-ui":"plugins/jetpack","jetpack-connection":"plugins/jetpack","jetpack-assets":"plugins/jetpack","jetpack-idc":"plugins/jetpack","jetpack-sync":"plugins/jetpack","jetpack-connection-ui":"plugins/jetpack","jetpack-google-fonts-provider":"plugins/jetpack","jetpack-jitm":"plugins/jetpack","jetpack-lazy-images":"plugins/jetpack","jetpack-my-jetpack":"plugins/jetpack","jetpack-config":"plugins/jetpack","jetpack-search-pkg":"plugins/jetpack","jetpack-tracking":"plugins/jetpack"},"domainPaths":{"jetpack-backup-pkg":"jetpack_vendor/automattic/jetpack-backup/","jetpack-compat":"jetpack_vendor/automattic/jetpack-compat/","jetpack-heartbeat":"jetpack_vendor/automattic/jetpack-heartbeat/","jetpack-licensing":"jetpack_vendor/automattic/jetpack-licensing/","jetpack-password-checker":"jetpack_vendor/automattic/jetpack-password-checker/","jetpack-plugins-installer":"jetpack_vendor/automattic/jetpack-plugins-installer/","jetpack-post-list":"jetpack_vendor/automattic/jetpack-post-list/","jetpack-admin-ui":"jetpack_vendor/automattic/jetpack-admin-ui/","jetpack-connection":"jetpack_vendor/automattic/jetpack-connection/","jetpack-assets":"jetpack_vendor/automattic/jetpack-assets/","jetpack-idc":"jetpack_vendor/automattic/jetpack-identity-crisis/","jetpack-sync":"jetpack_vendor/automattic/jetpack-sync/","jetpack-connection-ui":"jetpack_vendor/automattic/jetpack-connection-ui/","jetpack-google-fonts-provider":"jetpack_vendor/automattic/jetpack-google-fonts-provider/","jetpack-jitm":"jetpack_vendor/automattic/jetpack-jitm/","jetpack-lazy-images":"jetpack_vendor/automattic/jetpack-lazy-images/","jetpack-my-jetpack":"jetpack_vendor/automattic/jetpack-my-jetpack/","jetpack-config":"jetpack_vendor/automattic/jetpack-config/","jetpack-search-pkg":"jetpack_vendor/automattic/jetpack-search/","jetpack-tracking":"jetpack_vendor/automattic/jetpack-tracking/"}};
+</script>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1641292264h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://researchchemicalscene.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="../../../../index.html" rel="canonical"/>
+<link href="https://wp.me/pbHkTh-4h9" rel="shortlink"/>
+<link href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Frc-scene.com%2F2022%2F04%2F10%2F2-years-rc-scene-emergency-response-plan-update%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/json+oembed"/><link href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Frc-scene.com%2F2022%2F04%2F10%2F2-years-rc-scene-emergency-response-plan-update%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/xml+oembed"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="article" property="og:type"/>
+<meta content="2 years RC SCENE &amp; Emergency Response Plan Update" property="og:title"/>
+<meta content="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/" property="og:url"/>
+<meta content="Recent events make our plans to spend the summer holiday with The Real RC even more complicated. Down by one, Cuba, Iran, Mongolia, and Russia remain the only places with access to the sun not to h…" property="og:description"/>
+<meta content="2022-04-10T10:18:39+00:00" property="article:published_time"/>
+<meta content="2022-04-10T10:18:39+00:00" property="article:modified_time"/>
+<meta content="RC SCENE - Safe NOT Scam! Research Chemicals" property="og:site_name"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=1200" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="675" property="og:image:height"/>
+<meta content="A world map with countries from which RC SCENE welcomed visitors in the first two years highlighted in green. There is a lot f green with fewer than 30 countries who could not visit us without using a VPN or because parts of Africa may not allow internet access as we are used to it, and in generally speaking, could face more urgent challenges to cope with (civil wars, droughts and starvation) rather tahn being interested in shitty synthetic designer drugs. Unfortunately, that is real life whilr out welfare-boredom is insane luxury." property="og:image:alt"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="https://www.facebook.com/WordPresscom" property="article:publisher"/>
+<meta content="@rc_scene" name="twitter:creator"/>
+<meta content="@rc_scene" name="twitter:site"/>
+<meta content="2 years RC SCENE &amp; Emergency Response Plan Update" name="twitter:text:title"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=640" name="twitter:image"/>
+<meta content="A world map with countries from which RC SCENE welcomed visitors in the first two years highlighted in green. There is a lot f green with fewer than 30 countries who could not visit us without using a VPN or because parts of Africa may not allow internet access as we are used to it, and in generally speaking, could face more urgent challenges to cope with (civil wars, droughts and starvation) rather tahn being intere…" name="twitter:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="../../../../osd.xml" rel="search" title="RC SCENE - Safe NOT Scam! Research Chemicals" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'blank-canvas-blocks', amp: false, siteid: 8982, blogid: 172868107, consent: __ATA_CC(), uloggedin: 0 };
+		</script>
+<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta content="RC SCENE - Safe NOT Scam! Research Chemicals" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Scheduled Substances, Law, Drugs, Scammers, Harm Reduction, RC Vendors, RC Shops, NPS, Order Online, Europe, USA, China, Canada, rcscene" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://rc-scene.com/feed/;icon-uri=https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Recent events make our plans to spend the summer holiday with The Real RC even more complicated. Down by one, Cuba, Iran, Mongolia, and Russia remain the only places with access to the sun not to have explicitly announced they would arrest Alex right at the airport. 2 years rc-scene.com Our dear web host remembers…" name="description"/>
+<link href="#" rel="amphtml"/><style>.wp-container-1 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-1 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-1 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-1 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-1 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-2 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: wrap;align-items: center;}.wp-container-2 > * { margin: 0; }</style>
+<style>.wp-container-4 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: wrap;align-items: center;justify-content: flex-end;}.wp-container-4 > * { margin: 0; }</style>
+<style>.wp-container-5 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: wrap;align-items: center;justify-content: space-between;}.wp-container-5 > * { margin: 0; }</style>
+<style>.wp-container-6 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-6 > .alignwide { max-width: 1000px;}.wp-container-6 .alignfull { max-width: none; }.wp-container-6 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-6 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-6 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-6 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-6 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-7 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-7 > .alignwide { max-width: 1000px;}.wp-container-7 .alignfull { max-width: none; }.wp-container-7 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-7 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-7 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-7 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-7 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-8 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-8 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-8 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-8 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-8 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-9 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: nowrap;align-items: center;}.wp-container-9 > * { margin: 0; }</style>
+<style>.wp-container-10 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-10 > .alignwide { max-width: 1000px;}.wp-container-10 .alignfull { max-width: none; }.wp-container-10 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-10 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-10 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-10 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-10 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-11 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: wrap;align-items: center;}.wp-container-11 > * { margin: 0; }</style>
+<style>.wp-container-12 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-12 > .alignwide { max-width: 1000px;}.wp-container-12 .alignfull { max-width: none; }.wp-container-12 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-12 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-12 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-12 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-12 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-13 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-13 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-13 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-13 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-13 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-14 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-14 > .alignwide { max-width: 1000px;}.wp-container-14 .alignfull { max-width: none; }.wp-container-14 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-14 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-14 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-14 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-14 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<style>.wp-container-15 {display: flex;gap: var( --wp--style--block-gap, 0.5em );flex-wrap: wrap;align-items: center;justify-content: center;}.wp-container-15 > * { margin: 0; }</style>
+<style>.wp-container-16 > :where(:not(.alignleft):not(.alignright)) {max-width: 620px;margin-left: auto !important;margin-right: auto !important;}.wp-container-16 > .alignwide { max-width: 1000px;}.wp-container-16 .alignfull { max-width: none; }.wp-container-16 > .alignleft { float: left; margin-inline-start: 0; margin-inline-end: 2em; }.wp-container-16 > .alignright { float: right; margin-inline-start: 2em; margin-inline-end: 0; }.wp-container-16 > .aligncenter { margin-left: auto !important; margin-right: auto !important; }.wp-container-16 > * { margin-block-start: 0; margin-block-end: 0; }.wp-container-16 > * + * { margin-block-start: var( --wp--style--block-gap ); margin-block-end: 0; }</style>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=32" rel="icon" sizes="32x32"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=192" rel="icon" sizes="192x192"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=180" rel="apple-touch-icon"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=270" name="msapplication-TileImage"/>
+<link href="https://s2.wp.com/?custom-css=1&amp;csblog=bHkTh&amp;cscache=6&amp;csrev=605" id="custom-css-css" rel="stylesheet" type="text/css"/>
+<!-- Your Google Analytics Plugin is missing the tracking ID -->
+</head>
+<body class="post-template-default single single-post postid-16439 single-format-standard wp-custom-logo wp-embed-responsive jps-theme-pub/blank-canvas-blocks customizer-styles-applied highlander-enabled highlander-light">
+<svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-dark-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0 0.49803921568627" type="table"></fefuncr><fefuncg tablevalues="0 0.49803921568627" type="table"></fefuncg><fefuncb tablevalues="0 0.49803921568627" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0 1" type="table"></fefuncr><fefuncg tablevalues="0 1" type="table"></fefuncg><fefuncb tablevalues="0 1" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-purple-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0.54901960784314 0.98823529411765" type="table"></fefuncr><fefuncg tablevalues="0 1" type="table"></fefuncg><fefuncb tablevalues="0.71764705882353 0.25490196078431" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-blue-red"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0 1" type="table"></fefuncr><fefuncg tablevalues="0 0.27843137254902" type="table"></fefuncg><fefuncb tablevalues="0.5921568627451 0.27843137254902" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-midnight"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0 0" type="table"></fefuncr><fefuncg tablevalues="0 0.64705882352941" type="table"></fefuncg><fefuncb tablevalues="0 1" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-magenta-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0.78039215686275 1" type="table"></fefuncr><fefuncg tablevalues="0 0.94901960784314" type="table"></fefuncg><fefuncb tablevalues="0.35294117647059 0.47058823529412" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-purple-green"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0.65098039215686 0.40392156862745" type="table"></fefuncr><fefuncg tablevalues="0 1" type="table"></fefuncg><fefuncb tablevalues="0.44705882352941 0.4" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg focusable="false" height="0" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" viewbox="0 0 0 0" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="wp-duotone-blue-orange"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr tablevalues="0.098039215686275 1" type="table"></fefuncr><fefuncg tablevalues="0 0.66274509803922" type="table"></fefuncg><fefuncb tablevalues="0.84705882352941 0.41960784313725" type="table"></fefuncb><fefunca tablevalues="1 1" type="table"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg>
+<div class="wp-site-blocks"><header class="wp-block-template-part">
+<div class="wp-container-6 wp-block-group gapless-group">
+<div class="wp-container-5 wp-block-group alignfull site-header" style="padding-top:var(--wp--custom--gap--vertical);padding-bottom:var(--wp--custom--gap--vertical);">
+<div class="wp-container-2 wp-block-group site-brand"><div class="wp-block-site-logo"><a class="custom-logo-link" href="../../../../index.html" rel="home"><img alt="RC SCENE SAFE NOT SCAM LOGO" class="custom-logo" data-attachment-id="8955" data-comments-opened="1" data-image-caption="" data-image-description="&lt;p&gt;logo weiß rc scene white&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="rc scene on white v2" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png?w=600" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png?w=400" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png" data-orig-size="600,600" data-permalink="https://rc-scene.com/rc-scene-on-white-v2-2/" height="64" loading="lazy" sizes="(max-width: 64px) 100vw, 64px" src="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png" srcset="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png?w=64&amp;h=64 64w, https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-on-white-v2.png?w=128&amp;h=128 128w" width="64"/></a></div>
+<div class="wp-container-1 wp-block-group"><p class="wp-block-site-title"><a href="../../../../index.html" rel="home">RC SCENE – Safe NOT Scam! Research Chemicals</a></p>
+<p class="wp-block-site-tagline">Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Scheduled Substances, Law, Drugs, Scammers, Harm Reduction, RC Vendors, RC Shops, NPS, Order Online, Europe, USA, China, Canada, rcscene</p></div>
+</div>
+<nav aria-label="" class="wp-container-4 is-responsive items-justified-right wp-block-navigation"><button aria-haspopup="true" aria-label="Open menu" class="wp-block-navigation__responsive-container-open" data-micromodal-trigger="modal-3"><svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="1.5" width="16" x="4" y="7.5"></rect><rect height="1.5" width="16" x="4" y="15"></rect></svg></button>
+<div class="wp-block-navigation__responsive-container" id="modal-3" style="">
+<div class="wp-block-navigation__responsive-close" data-micromodal-close="" tabindex="-1">
+<div aria-label="Menu" class="wp-block-navigation__responsive-dialog">
+<button aria-label="Close menu" class="wp-block-navigation__responsive-container-close" data-micromodal-close=""><svg aria-hidden="true" focusable="false" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M13 11.8l6.1-6.3-1-1-6.1 6.2-6.1-6.2-1 1 6.1 6.3-6.5 6.7 1 1 6.5-6.6 6.5 6.6 1-1z"></path></svg></button>
+<div class="wp-block-navigation__responsive-container-content" id="modal-3-content">
+<ul class="wp-block-navigation__container"><li class="wp-block-navigation-item has-child open-on-hover-click menu-item menu-item-type-post_type menu-item-object-page menu-item-home wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../../../../index.html" title="">Welcome :-))</a><button aria-expanded="false" aria-label="Welcome :-)) submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg aria-hidden="true" fill="none" focusable="false" height="12" viewbox="0 0 12 12" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul class="wp-block-navigation__submenu-container"><li class="wp-block-navigation-item menu-item menu-item-type-custom menu-item-object-custom menu-item-home wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../index.html" title=""><span class="wp-block-navigation-item__label">Most Recent Comments</span></a></li><li class="wp-block-navigation-item menu-item menu-item-type-custom menu-item-object-custom wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../index.html" title=""><span class="wp-block-navigation-item__label">Search the Site</span></a></li><li class="wp-block-navigation-item menu-item menu-item-type-custom menu-item-object-custom wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../index.html" title=""><span class="wp-block-navigation-item__label">Contact</span></a></li></ul></li><li class="wp-block-navigation-item has-child open-on-hover-click menu-item menu-item-type-post_type menu-item-object-page wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../../../../trusted-research-chemical-vendors-europe/index.html" title="">Research Chemical Vendors List</a><button aria-expanded="false" aria-label="Research Chemical Vendors List submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg aria-hidden="true" fill="none" focusable="false" height="12" viewbox="0 0 12 12" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul class="wp-block-navigation__submenu-container"><li class="wp-block-navigation-item menu-item menu-item-type-taxonomy menu-item-object-category wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../category/trusted-shop-reviews/index.html" title=""><span class="wp-block-navigation-item__label">Trusted Shop Reviews</span></a></li><li class="wp-block-navigation-item menu-item menu-item-type-custom menu-item-object-custom wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="http://safenotscam.com" title=""><span class="wp-block-navigation-item__label">Scam Warnings</span></a></li><li class="wp-block-navigation-item menu-item menu-item-type-taxonomy menu-item-object-post_tag wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../tag/substance-warning/index.html" title=""><span class="wp-block-navigation-item__label">Substance Warnings</span></a></li></ul></li><li class="wp-block-navigation-item menu-item menu-item-type-post_type menu-item-object-page wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../../../../news/index.html" title=""><span class="wp-block-navigation-item__label">News &amp; Newsletter</span></a></li></ul>
+</div>
+</div>
+</div>
+</div></nav></div>
+</div>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+</header>
+<div class="wp-container-7 wp-block-group"><h1 class="wp-block-post-title">2 years RC SCENE &amp; Emergency Response Plan Update</h1></div>
+<main class="wp-container-13 wp-block-group"><figure class="alignfull wp-block-post-featured-image"><img alt="2 years RC SCENE &amp; Emergency Response Plan Update" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" data-attachment-id="16448" data-comments-opened="1" data-image-caption="&lt;p&gt;Between March 2020, and March 2022, rc-scene.com welcomed visitors from all over the planet, the community calls 164 different home.&lt;/p&gt;
+" data-image-description="&lt;p&gt;rc scene visitors, stats, 164 countriies, world map, rc-scene.com, 03 2022&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 Ren\u00e9 for rc-scene.com \/ K\u00d8MPR\u00d8M\u00c6T (2022)","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="2 years RC-SCENE.com had friends from 164 different countries on all continents drop by since" data-large-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=1920" data-medium-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=625" data-orig-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg" data-orig-size="1920,1080" data-permalink="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/2-years-rc-scene-com-had-friends-from-164-different-countries-on-all-continents-drop-by-since/" height="576" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=1024" srcset="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=1024 1024w, https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=350 350w, https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=625 625w, https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=768 768w, https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg 1920w" width="1024"/></figure>
+<div class="wp-container-10 entry-content wp-block-post-content">
+<figure class="wp-block-image alignwide size-large"><img alt="A candle light in the night; Headline: Countries that should be safe: Text: A list: Brazil, Cuba, Iran, Mongolia, Russia; Brazil is stricken through" class="wp-image-16441" data-attachment-id="16441" data-comments-opened="1" data-image-caption="&lt;p&gt;Recent events make our plans to spend the summer holiday with The Real RC even more complicated. We are down by one, with only Cuba, Iran, Mongolia, and Russia remaining an option because neither explicitly announced they would arrest Alex right at the airport.&lt;/p&gt;
+" data-image-description="&lt;p&gt;The Real RC, RC SCENE, Candle Safe Countries, TRC, safe havens&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 Ren\u00e9 for rc-scene.com \/ K\u00d8MPR\u00d8M\u00c6T","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="emergency response plan update 04 2022" data-large-file="https://researchchemicalscene.files.wordpress.com/2022/04/emergency-response-plan-update-04-2022.jpg?w=1920" data-medium-file="https://researchchemicalscene.files.wordpress.com/2022/04/emergency-response-plan-update-04-2022.jpg?w=625" data-orig-file="https://researchchemicalscene.files.wordpress.com/2022/04/emergency-response-plan-update-04-2022.jpg" data-orig-size="1920,1080" data-permalink="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/emergency-response-plan-update-04-2022/" height="1080" loading="lazy" src="https://researchchemicalscene.files.wordpress.com/2022/04/emergency-response-plan-update-04-2022.jpg" width="1920"/><figcaption>Recent events make our plans to spend the summer holiday with The Real RC even more complicated. Down by one, Cuba, Iran, Mongolia, and Russia remain the only places with access to the sun not to have explicitly announced they would arrest Alex right at the airport.</figcaption></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<h2>2 years rc-scene.com</h2>
+<p>Our dear web host remembers March, 2020 as that time when 18 people discovered a tiny weblog, still in the making, with 9 more or less empty pages published. </p>
+<p>They did not quite come in piece. A good thing, I had been in contact with the web host before. I asked our dear industry leader in developing website apps and hosting them if they really believed they could protect my blog against criminal hackers as long as I stick to the best practices their firewall app engineer had shared with me.</p>
+<span id="more-16439"></span>
+<p>They told to me that the vast majority of websites is actually powered by Automattic (WordPress) which I still find impressive. These are real experts in their field, I felt happy having finally found a new and so much better home for my hobbies.</p>
+<p>They still added that nightly custom code ideas born out of sleep deprivation must not happen.</p>
+<p>They never told me how they do it, but so far, I remember three temporary downtimes – which is nothing, really.</p>
+<p>For a moment there, I had been concerned about a dude trying to irritate the Askimet Spam Filter by posting three comments full with script code every minute and that for days. He must have hoped to somehow gain access to a part of the database if there only were a bug somewehere in the the spam filter. An ambitious plan for someone who could not know have known yet what RC SCENE would become. Those motherfuckers got hired/paid. Well, luckily the Jetpak Askiment Spam Filter today might be one of very few to also decipher script languages in order to silently discard that spam without even have to alarm me. </p>
+<p>Moving to California was a good decision. Getting up in the mornings with this never-ending fear of criminals that could have hacked my blog and destroyed my work (again) had became unbearable and almost killed it for me. </p>
+<p>Here is better!</p>
+<p class="has-text-align-center has-tertiary-background-color has-background"><strong>To years and to better, cheers!</strong></p>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<h2>#1</h2>
+<figure class="wp-block-image alignwide size-large"><img alt="A world map with countries from which RC SCENE welcomed visitors in the first two years highlighted in green. There is a lot f green with fewer than 30 countries who could not visit us without using a VPN or because parts of Africa may not allow internet access as we are used to it, and in generally speaking, could face more urgent challenges to cope with (civil wars, droughts and starvation) rather tahn being interested in shitty synthetic designer drugs. Unfortunately, that is real life whilr out welfare-boredom is insane luxury." class="wp-image-16448" data-attachment-id="16448" data-comments-opened="1" data-image-caption="&lt;p&gt;Between March 2020, and March 2022, rc-scene.com welcomed visitors from all over the planet, the community calls 164 different home.&lt;/p&gt;
+" data-image-description="&lt;p&gt;rc scene visitors, stats, 164 countriies, world map, rc-scene.com, 03 2022&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 Ren\u00e9 for rc-scene.com \/ K\u00d8MPR\u00d8M\u00c6T (2022)","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="2 years RC-SCENE.com had friends from 164 different countries on all continents drop by since" data-large-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=1920" data-medium-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg?w=625" data-orig-file="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg" data-orig-size="1920,1080" data-permalink="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/2-years-rc-scene-com-had-friends-from-164-different-countries-on-all-continents-drop-by-since/" height="1080" loading="lazy" src="https://researchchemicalscene.files.wordpress.com/2022/04/2-years-rc-scene.com-had-friends-from-164-different-countries-on-all-continents-drop-by-since.jpg" width="1920"/><figcaption>Between March 2020, and March 2022, rc-scene.com welcomed visitors from all over the planet. We call 164 different countries home.</figcaption></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<h2>ÆMERICA!</h2>
+<p>Before Autumn, RC SCENE – to everyone’s surprise – had already became the most popular and influential site discussing NPS and vendors in North America. </p>
+<p>Some must have managed to see beyond the lies whoever tiredlessly comapaigned. Some finally understood that we are for real and that I am not signing lies with my name, of course.</p>
+<p>That long hard road out of hell (I had never expecpted to be called a liar, blackmailer, or greedy or a thief…) meant tens of thousand of hours of hard work, lead to health issues (one day, I woke up blind  – yes, just like that), paranoia, panic, and growing distrust,. </p>
+<p>Many disapointments, and be it only a lost tooth or my hair growing grey now; things that had not been an issue before I today wear like tatoos remembering me that to better do something something about big corporate money and self-acclaimed governemnt clowns poising our tap water.</p>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<figure class="wp-block-pullquote"><blockquote><p>Was in mir sitzt, is weiß gespritzt, des is ma völlig klar, obgleich ich Whisky teschern tua seitdem in USA ich war</p><p></p><p>Dort sagen’s Falco, you are wonderful, kumm hobt’s me langsam gern</p><p></p><p>Wenn’s meine Records trotzdem kaufen tta’ ds,  dann tt’ es mi net stören</p><p></p><p>America … Oh – la la la – la la – lala</p><p></p><p>America, wenn’s ihr ma glaubads, wie ma euch vermissen kann.</p><cite>Falco –  America (1985)</cite></blockquote></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<h2>ÆMERICA!</h2>
+<p>Of course, it was you again to finally help me get over that inner struggle, this feeling of guilt for blogging about something like drugs. Thank you so much for reminding me of why nobody here even considering to give up.</p>
+<p>Of course, it was you who made this idea relevant and popular. Also, just like friends from Europe, you did not hesitate to support the project with your knowledge, time, and money – although we had never met before.</p>
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+<h2>Our effort paid-off: RC SCENE is a hit!</h2>
+<figure class="wp-block-image alignfull size-large"><img alt="screenshot of similarweb.com displaying what they estimate our site traffic/performance" class="wp-image-16454" data-attachment-id="16454" data-comments-opened="1" data-image-caption="&lt;p&gt;Last month, 77 800 visitors spent an average of 8 minutes reading on rc-scene.com&lt;/p&gt;
+" data-image-description="&lt;p&gt;stats, traffic, rc scene, rc-scene.com, march 2022, performance, popularity, visits, rank&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 Ren\u00e9 for rc-scene.com \/ K\u00d8MPR\u00d8M\u00c6T (2022)","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="rc-scene.com site traffic performance visits in March 2022 (similarweb)" data-large-file="https://researchchemicalscene.files.wordpress.com/2022/04/rc-scene.com-site-traffic-performance-visits-in-march-2022-similarweb.jpg?w=1920" data-medium-file="https://researchchemicalscene.files.wordpress.com/2022/04/rc-scene.com-site-traffic-performance-visits-in-march-2022-similarweb.jpg?w=625" data-orig-file="https://researchchemicalscene.files.wordpress.com/2022/04/rc-scene.com-site-traffic-performance-visits-in-march-2022-similarweb.jpg" data-orig-size="1920,1080" data-permalink="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/rc-scene-com-site-traffic-performance-visits-in-march-2022-similarweb/" height="1080" loading="lazy" src="https://researchchemicalscene.files.wordpress.com/2022/04/rc-scene.com-site-traffic-performance-visits-in-march-2022-similarweb.jpg" width="1920"/><figcaption>Last month, 77 800 visitors spent an average of 8 minutes reading on rc-scene.com<br/><em>(as estimated by the estimation professionals with <a href="https://www.similarweb.com/website/rc-scene.com/#overview" rel="noreferrer noopener" target="_blank">similarweb</a>)</em></figcaption></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<p class="has-text-align-center has-pale-cyan-blue-background-color has-background">Thank you all so much for sticking with RC SCENE! 🎈</p>
+<div class="wp-container-9 wp-block-columns alignfull">
+<div class="wp-container-8 wp-block-column">
+<div aria-hidden="true" class="wp-block-spacer" style="height:100px;"></div>
+</div>
+</div>
+<h2>Someone appears missing</h2>
+<p>This is the first time, I shared this figures. You might have imagened a project to lie idle not to further gain in popularity. I decided to play dead until I am happy with the site stats. </p>
+<p>Now that it is clear that RC SCENE is the bible for US vendors still clinging to its original idea (something like DEATH TO ALL SCAMMERS,) I think might save me A LOT of empty miles discussing with complete retards. 😉</p>
+<p><strong>No, not really</strong>…Of course, there had been real issues preventing new content published.</p>
+<ul id="list-liste-abstand"><li>Every year, January to April, I make plans for committing suide. Don’t expect anything from people shopping for sharp knives while they should better sit at home and work on thsat farewell letter that somehow reads like a parody.</li><li>To proof spineless vermin liars, RC SCENE might have gone as far as joining me in that hole they call bankrupcy. Good idea, not quite thought through to the end, though. Captain Hindsight would have known better, of course. What a shame I am not more like him.</li><li>Seemingly still under the impression, certain substance warnings discussed here would be a little extreme and written by whoever with no clue, and not knowing what they are writing, and should better have ask the vendor instead of spreading nonsense again (that’s exactly what he said,) a certain vendor turned out to also be into recycle smurfing and might or might not purposly have hurt me badly even though not necessarily with the intent to murder — Well, whatever it was, they found themselves, and long before I leave the bed again to warn them them because that was a hell of a shitty cheap shit recycling idea.</li><li><strong>Nobody seems interested in joining the team. Now that I guarantee to compensate them, they almost seem as if they were afraid of selling-out to big corporate blogging.</strong></li><li>The rest turned out to be drug dealers hoping for my private money to compensate them for trying to grab as many email addresses as possible to expand their customer base…</li></ul>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<figure class="wp-block-pullquote"><blockquote><p>don’t miss me I was never really here</p><p>I was never really here</p><p>I was never really</p><cite>Falco –  Kill the bored (Track 2 on Nuance The Musical @ <em>Prescriptions</em> FCD08)</cite></blockquote></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<h2>Already in the making…</h2>
+<ul><li><strong>Articles and pages will sometimes be published at early stage (as stubs) to give you an idea on what we are working. Maybe, you happened to be an expert in that field and want to offer your help (words, photos, discussion, tipps, …?)</strong><br/>Remember: Nobody here other than me works for free!<br/></li><li><strong>The website undergoes a design update. Funny ideas and professional feedback welcome, thanks!</strong><br/></li><li>The working-title<strong> Samples Kømpliance</strong> is nothing less than a list mailer (everyone to everyone) in which we can anonymously discuss and exchange our experiences with vendors and products. <br/><br/>The clue: Everyone with an active 36 USD per year subscription will receive a perfectly anonmyous email account supporting PGP-encypted subject lines out-of-the-box, etc. No names, no email-addresses, no phone numbers, no nothing asked.<br/><br/>YOU WON’T FIND ANYTHING SIMILAR ANYWHERE ELSE.<br/><br/>I kept an eye on how Godfrey is doing and he is doing pretty pretty pretty good since we last spoke.<br/><br/>Godfrey believes in Human Rights, Freedom of Speech, and Privacy. <br/><br/>With his team, they developed the ideal service for exchanging emails without any government spying on you. Not even if your government was already spying on your computer, they could read the contents of your emails.<br/><br/>He will not tolerate anything illegal or unethical: No vending, no pornography, no conspiracy-planning on his watch.<br/><br/>If we remain sane, we may use a solution I had been trying to find for years.<br/><br/>If any of us turns out a fucking criminal with no brains or respect for other peoples’ creativity, passion, and hard work, then all accounts will be erased without warning.<br/></li><li>2 years RC SCENE meant a lot of stess lately. I am not keen of welcoming guests of which some even believed they stay over night because to cheap for a hotel room. I got rid of my living room table to make clear I don’t want anyone here.<br/><br/>A few incurable optimists brought or sent presents, we took pictures of candles to remember those nights. <br/><br/><strong>A series of brief vendor updates who said hello will be an ongoing project limited only to the amount of 2 years candles available at the grocery store around the corner.A series of brief vendor updates who said hello will be an ongoing project limited only to the amount of 2 years candles available at the grocery store around the corner.</strong><br/><br/>With TRC, Mefis, RareChems, and, maybe, also Predator, Professor, and FX, we might chat a little while having cake and watching candles burn.<br/> </li><li>Your constant asking about <strong>active Noids and a-PHP</strong> did not go by unheard. Let’s focus on how to pay for the rent first.<br/></li><li>New subscriptions to support RC SCENE and maybe get to see a goodie once in a while will probably be updated to 36 USD per year (no change here) and 7 Euros per month (that is new and expensive).<br/><br/>Don’t worry: Active subscriptions will always remain the same price and never become more expensive.<br/></li><li><strong>The minimum-wage Fundraiser</strong>: Thank you all for offering donations in the past 14 months. I found a way that allows anonymous donations and even better: You can donate for a special cause if you like to.<br/><br/><strong>Should somebody read and reply emails? <br/></strong><br/><strong>Should somebody find the time to care about your scam complaints and try to help you with providing advice and stuff?<br/></strong><br/><strong>Should somebody maintain and fight with the US section?<br/></strong><br/><strong>Should somebody maintain the Canada section?<br/></strong><br/><strong>Should we compensate authors to have more words and photos and news and articles?<br/></strong><br/><strong>How about a community moderator for, e.g., The Sample Kømpliance?</strong><br/><br/><strong>Could a Wiki providing basic information and links to NPS/drugs legislation in various countries be of interest to you?<br/></strong><br/>øøø …such things. <br/><br/>I want to make everything as transparent as possible. <br/><br/>Also, your feedback counts. <br/>This is for you, and not for me or whoever. <br/><br/>I will provide you with the link soon, thanks!</li></ul>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<p class="has-text-align-center has-pale-cyan-blue-background-color has-background"><strong>Happy days! </strong>😀</p>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<span class="embed-youtube" style="text-align:center; display: block;"><iframe allowfullscreen="true" class="youtube-player" height="360" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="https://www.youtube.com/embed/uHRvak30iEs?version=3&amp;rel=1&amp;showsearch=0&amp;showinfo=1&amp;iv_load_policy=1&amp;fs=1&amp;hl=en&amp;autohide=2&amp;wmode=transparent" style="border:0;" width="640"></iframe></span>
+</div><figcaption><strong>Sad Lovers &amp; Giants – 50:50 <br/></strong>(from In The Breeze, 1984)</figcaption></figure>
+<div aria-hidden="true" class="wp-block-spacer" style="height:50px;"></div>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<span class="embed-youtube" style="text-align:center; display: block;"><iframe allowfullscreen="true" class="youtube-player" height="360" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" src="https://www.youtube.com/embed/S_ww6l6I2is?version=3&amp;rel=1&amp;showsearch=0&amp;showinfo=1&amp;iv_load_policy=1&amp;fs=1&amp;hl=en&amp;autohide=2&amp;wmode=transparent" style="border:0;" width="640"></iframe></span>
+</div><figcaption><strong>Badflower – Johnny Wants To Fight (2021)</strong></figcaption></figure>
+<div class="sharedaddy sd-like-enabled" id="jp-post-flair"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this page or photo</h3><div class="sd-content"><ul><li class="share-twitter"><a class="share-twitter sd-button share-icon no-text" data-shared="sharing-twitter-16439" href="../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-telegram"><a class="share-telegram sd-button share-icon no-text" data-shared="" href="../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Telegram"><span></span><span class="sharing-screen-reader-text">Click to share on Telegram (Opens in new window)</span></a></li><li class="share-reddit"><a class="share-reddit sd-button share-icon no-text" data-shared="" href="../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Reddit"><span></span><span class="sharing-screen-reader-text">Click to share on Reddit (Opens in new window)</span></a></li><li class="share-facebook"><a class="share-facebook sd-button share-icon no-text" data-shared="sharing-facebook-16439" href="../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Facebook"><span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)</span></a></li><li class="share-jetpack-whatsapp"><a class="share-jetpack-whatsapp sd-button share-icon no-text" data-shared="" href="../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on WhatsApp"><span></span><span class="sharing-screen-reader-text">Click to share on WhatsApp (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div></div></div>
+<div class="wp-block-template-part">
+<div class="wp-container-12 wp-block-group">
+<div class="wp-container-11 wp-block-group post-meta">
+<div class="is-style-post-author-icon is-style-post-author-icon wp-block-post-author" style="font-size: var(--wp--custom--font-sizes--x-small);"><div class="wp-block-post-author__content"><p class="wp-block-post-author__name">Trusted RC Shops</p></div></div>
+<div class="is-style-post-date-icon wp-block-post-date" style="font-size: var(--wp--custom--font-sizes--x-small);"><time datetime="2022-04-10T03:18:39-07:00"><a href="../../../../index.html">April 10, 2022</a></time></div>
+<div class="taxonomy-category is-style-post-category-icon wp-block-post-terms" style="font-size: var(--wp--custom--font-sizes--x-small);"><a href="../../../../category/default/index.html" rel="tag">Default</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../category/diary/index.html" rel="tag">Diary</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../category/history/index.html" rel="tag">History</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../category/news-gossip/index.html" rel="tag">News &amp; Gossip</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../category/rc-scene/index.html" rel="tag">RC SCENE</a></div>
+<div class="taxonomy-post_tag is-style-post-tag-icon wp-block-post-terms" style="font-size: var(--wp--custom--font-sizes--x-small);"><a href="../../../../tag/2-years/index.html" rel="tag">2 years</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../tag/happy-birthday/index.html" rel="tag">happy birthday</a><span class="wp-block-post-terms__separator">, </span><a href="../../../../tag/rc-scene/index.html" rel="tag">RC SCENE</a></div>
+</div>
+</div>
+</div></main>
+<div class="wp-container-14 wp-block-group">
+<div aria-hidden="true" class="wp-block-spacer" style="height:60px;"></div>
+<div class="wp-block-post-comments">
+<!-- You can start editing here. -->
+<!-- If comments are open, but there are no comments. -->
+<div class="comment-respond" id="respond">
+<h3 class="comment-reply-title" id="reply-title">Leave a Reply <small><a href="../../../../index.html#respond" id="cancel-comment-reply-link" rel="nofollow" style="display:none;">Cancel reply</a></small></h3> <form action="https://rc-scene.com/wp-comments-post.php" class="comment-form" id="commentform" method="post">
+<input id="highlander_comment_nonce" name="highlander_comment_nonce" type="hidden" value="76fe6ed491"/><input name="_wp_http_referer" type="hidden" value="/2022/04/10/2-years-rc-scene-emergency-response-plan-update/"/>
+<input id="hc_post_as" name="hc_post_as" type="hidden" value="guest"/>
+<div class="comment-form-field comment-textarea">
+<label for="comment">Enter your comment here…</label>
+<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+<div class="comment_registration" id="comment-form-identity">
+<div id="comment-form-nascar">
+<p>Please log in using one of these methods to post your comment:</p>
+<ul>
+<li>
+<a class="nascar-signin-link" href="../../../../index.html#comment-form-load-service:WordPress.com" id="postas-wordpress" title="Login via WordPress.com">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#0087be"></path></g></svg> </a>
+</li>
+<li>
+<a class="nascar-signin-link" href="../../../../index.html#comment-form-load-service:Twitter" id="postas-twitter" title="Login via Twitter">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#1DA1F2"></path></g></svg> </a>
+</li>
+<li>
+<a class="nascar-signin-link" href="../../../../index.html#comment-form-load-service:Facebook" id="postas-facebook" title="Login via Facebook">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#3B5998"></path></g></svg> </a>
+</li>
+</ul>
+</div>
+<div class="comment-form-service selected" id="comment-form-guest">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank"> <img alt="Gravatar" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</a> </div>
+<div class="comment-form-fields">
+<div class="comment-form-field comment-form-email">
+<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+<div class="comment-form-input"><input id="email" name="email" type="email" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-author">
+<label for="author">Name <span class="required">(required)</span></label>
+<div class="comment-form-input"><input id="author" name="author" type="text" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-url">
+<label for="url">Website</label>
+<div class="comment-form-input"><input id="url" name="url" type="url" value=""/></div>
+</div>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-wordpress">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="WordPress.com Logo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-wordpress" id="wordpress-avatar" name="wp_avatar" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-user_id" name="wp_user_id" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-access_token" name="wp_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-wordpress">
+<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log Out</a> / 
+				<a href="../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#0087be"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-googleplus">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Google photo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-googleplus" id="googleplus-avatar" name="googleplus_avatar" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-user_id" name="googleplus_user_id" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-access_token" name="googleplus_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-googleplus">
+<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log Out</a> / 
+				<a href="../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 60 60" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" fill="#519bf7"></path><path d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" fill="#3db366"></path><path d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" fill="#fdc600"></path><path d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" fill="#f15b44"></path></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-twitter">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Twitter picture" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-twitter" id="twitter-avatar" name="twitter_avatar" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-user_id" name="twitter_user_id" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-access_token" name="twitter_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-twitter">
+<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log Out</a> / 
+				<a href="../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#1DA1F2"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-facebook">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Facebook photo" class="no-grav" src="" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-facebook" id="facebook-avatar" name="fb_avatar" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-user_id" name="fb_user_id" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-access_token" name="fb_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-facebook">
+<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log Out</a> / 
+				<a href="../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#3B5998"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-load-service">
+<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+<p>Connecting to %s</p>
+</div>
+</div>
+<script type="text/javascript">
+var highlander_expando_javascript = function () {
+
+	function hide( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.setProperty( 'display', 'none' );
+		}
+	}
+
+	function show( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.removeProperty( 'display' );
+		}
+	}
+
+	var input = document.createElement( 'input' );
+	var comment = document.querySelector( '#comment' );
+
+	if ( input && comment && 'placeholder' in input ) {
+		var label = document.querySelector( '.comment-textarea label' );
+		if ( label ) {
+			var text = label.textContent;
+			label.parentNode.removeChild( label );
+			comment.setAttribute( 'placeholder', text );
+		}
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	hide( '#comment-form-identity' );
+	hide( '#comment-form-subscribe' );
+	hide( '#commentform .form-submit' );
+
+	if ( comment ) {
+		comment.style.height = '10px';
+
+		var handler = function () {
+			comment.style.height = HighlanderComments.initialHeight + 'px';
+			show( '#comment-form-identity' );
+			show( '#comment-form-subscribe' );
+			show( '#commentform .form-submit' );
+			HighlanderComments.resizeCallback();
+
+			comment.removeEventListener( 'focus', handler );
+		};
+
+		comment.addEventListener( 'focus', handler );
+	}
+}
+
+if ( document.readyState !== 'loading' ) {
+	highlander_expando_javascript();
+} else {
+	document.addEventListener( 'DOMContentLoaded', highlander_expando_javascript );
+}
+
+</script>
+<div id="comment-form-subscribe">
+<p class="comment-subscription-form"><input id="subscribe" name="subscribe" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe" id="subscribe-label" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input id="subscribe_blog" name="subscribe_blog" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe_blog" id="subscribe-blog-label" style="display: inline;">Notify me of new posts via email.</label></p></div>
+<p class="form-submit">
+<input id="comment-submit" name="submit" type="submit" value="Post Comment"/>
+<input id="comment_post_ID" name="comment_post_ID" type="hidden" value="16439"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="0"/>
+</p>
+<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" type="hidden" value="edee39f40d"/></p>
+<input name="genseq" type="hidden" value="1649585942"/>
+<p style="display: none !important;"><label>Δ<textarea cols="45" maxlength="100" name="ak_hp_textarea" rows="8"></textarea></label><input id="ak_js_1" name="ak_js" type="hidden" value="55"/><script>document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );</script></p> </form>
+</div><!-- #respond -->
+<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" rel="nofollow noopener" target="_blank">Learn how your comment data is processed</a>.</p></div></div>
+<footer class="site-footer-container wp-block-template-part">
+<div class="wp-container-16 wp-block-group">
+<div class="wp-container-15 wp-block-group">
+<p class="has-text-align-center"><a href="https://www.youtube.com/watch?v=ApW0Gggu2ZU" rel="noreferrer noopener" target="_blank">↗↗↑↥↟↟↟⇑⇡⇪ Take me back to Piauí</a>. : <a href="https://www.youtube.com/watch?v=ApW0Gggu2ZU" rel="noreferrer noopener" target="_blank">↑↥↟↟↟⇑⇡⇪</a>. <br/> <br/>(,)</p>
+</div>
+</div>
+</footer><!-- wp:group --><div class="wp-block-group"><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center"></p><!-- /wp:paragraph --></div><!-- /wp:group --></div>
+<!-- wpcom_wp_footer -->
+<style id="skip-link-styles">
+		.skip-link.screen-reader-text {
+			border: 0;
+			clip: rect(1px,1px,1px,1px);
+			clip-path: inset(50%);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute !important;
+			width: 1px;
+			word-wrap: normal !important;
+		}
+
+		.skip-link.screen-reader-text:focus {
+			background-color: #eee;
+			clip: auto !important;
+			clip-path: none;
+			color: #444;
+			display: block;
+			font-size: 1em;
+			height: auto;
+			left: 5px;
+			line-height: normal;
+			padding: 15px 23px 14px;
+			text-decoration: none;
+			top: 5px;
+			width: auto;
+			z-index: 100000;
+		}
+	</style>
+<script>
+	( function() {
+		var skipLinkTarget = document.querySelector( 'main' ),
+			sibling,
+			skipLinkTargetID,
+			skipLink;
+
+		// Early exit if a skip-link target can't be located.
+		if ( ! skipLinkTarget ) {
+			return;
+		}
+
+		// Get the site wrapper.
+		// The skip-link will be injected in the beginning of it.
+		sibling = document.querySelector( '.wp-site-blocks' );
+
+		// Early exit if the root element was not found.
+		if ( ! sibling ) {
+			return;
+		}
+
+		// Get the skip-link target's ID, and generate one if it doesn't exist.
+		skipLinkTargetID = skipLinkTarget.id;
+		if ( ! skipLinkTargetID ) {
+			skipLinkTargetID = 'wp--skip-link--target';
+			skipLinkTarget.id = skipLinkTargetID;
+		}
+
+		// Create the skip link.
+		skipLink = document.createElement( 'a' );
+		skipLink.classList.add( 'skip-link', 'screen-reader-text' );
+		skipLink.href = '#' + skipLinkTargetID;
+		skipLink.innerHTML = 'Skip to content';
+
+		// Inject the skip link.
+		sibling.parentElement.insertBefore( skipLink, sibling );
+	}() );
+	</script>
+<div class="jetpack-instant-search__widget-area" style="display: none">
+<div class="widget jetpack-filters widget_search" id="jetpack-search-filters-4"> <div class="jetpack-instant-search-wrapper" id="jetpack-search-filters-4-wrapper">
+</div></div> </div>
+<script id="grofiles-cards-js" src="#"></script>
+<script id="wpgroho-js-extra">
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin="anonymous" src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h" type="text/javascript"></script>
+<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+<div style="display:none">
+<div class="grofile-hash-map-9727f0a7a4583947da8e30d951049d03">
+</div>
+</div>
+<script id="highlander-comments-js-extra">
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/researchchemicalscene.wordpress.com\/public.api\/connect\/?action=request&domain=rc-scene.com","logoutURL":"https:\/\/researchchemicalscene.wordpress.com\/wp-login.php?action=logout&_wpnonce=8e4b742713","homeURL":"https:\/\/rc-scene.com\/","postID":"16439","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"1","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin="anonymous" src="https://s1.wp.com/_static/??/wp-content/js/textarea-autosize.min.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1645810379j" type="text/javascript"></script>
+<div id="jp-carousel-loading-overlay">
+<div id="jp-carousel-loading-wrapper">
+<span id="jp-carousel-library-loading"> </span>
+</div>
+</div>
+<div class="jp-carousel-overlay jp-carousel-light" style="display: none;">
+<div class="jp-carousel-container jp-carousel-light">
+<!-- The Carousel Swiper -->
+<div class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions" itemscope="" itemtype="https://schema.org/ImageGallery">
+<div class="jp-carousel swiper-wrapper"></div>
+<div class="jp-swiper-button-prev swiper-button-prev">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="12" id="maskPrev" mask-type="alpha" maskunits="userSpaceOnUse" width="9" x="8" y="6">
+<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"></path>
+</mask>
+<g mask="url(#maskPrev)">
+<rect fill="#FFFFFF" height="24" width="23.8823" x="0.579102"></rect>
+</g>
+</svg>
+</div>
+<div class="jp-swiper-button-next swiper-button-next">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="12" id="maskNext" mask-type="alpha" maskunits="userSpaceOnUse" width="8" x="8" y="6">
+<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"></path>
+</mask>
+<g mask="url(#maskNext)">
+<rect fill="#FFFFFF" height="24" width="23.8822" x="0.34375"></rect>
+</g>
+</svg>
+</div>
+</div>
+<!-- The main close buton -->
+<div class="jp-carousel-close-hint">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="14" id="maskClose" mask-type="alpha" maskunits="userSpaceOnUse" width="15" x="5" y="5">
+<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"></path>
+</mask>
+<g mask="url(#maskClose)">
+<rect fill="#FFFFFF" height="24" width="23.8823" x="0.409668"></rect>
+</g>
+</svg>
+</div>
+<!-- Image info, comments and meta -->
+<div class="jp-carousel-info">
+<div class="jp-carousel-info-footer">
+<div class="jp-carousel-pagination-container">
+<div class="jp-swiper-pagination swiper-pagination"></div>
+<div class="jp-carousel-pagination"></div>
+</div>
+<div class="jp-carousel-photo-title-container">
+<h2 class="jp-carousel-photo-caption"></h2>
+</div>
+<div class="jp-carousel-photo-icons-container">
+<a aria-label="Toggle photo metadata visibility" class="jp-carousel-icon-btn jp-carousel-icon-info" href="../../../../index.html">
+<span class="jp-carousel-icon">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="20" id="maskInfo" mask-type="alpha" maskunits="userSpaceOnUse" width="21" x="2" y="2">
+<path clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white" fill-rule="evenodd"></path>
+</mask>
+<g mask="url(#maskInfo)">
+<rect fill="#FFFFFF" height="24" width="23.8823" x="0.8125"></rect>
+</g>
+</svg>
+</span>
+</a>
+<a aria-label="Toggle photo comments visibility" class="jp-carousel-icon-btn jp-carousel-icon-comments" href="../../../../index.html">
+<span class="jp-carousel-icon">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="20" id="maskComments" mask-type="alpha" maskunits="userSpaceOnUse" width="21" x="2" y="2">
+<path clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white" fill-rule="evenodd"></path>
+</mask>
+<g mask="url(#maskComments)">
+<rect fill="#FFFFFF" height="24" width="23.8823" x="0.34668"></rect>
+</g>
+</svg>
+<span aria-label="This image has comments." class="jp-carousel-has-comments-indicator"></span>
+</span>
+</a>
+</div>
+</div>
+<div class="jp-carousel-info-extra">
+<div class="jp-carousel-info-content-wrapper">
+<div class="jp-carousel-photo-title-container">
+<h2 class="jp-carousel-photo-title"></h2>
+</div>
+<div class="jp-carousel-comments-wrapper">
+<div id="jp-carousel-comments-loading">
+<span>Loading Comments...</span>
+</div>
+<div class="jp-carousel-comments"></div>
+<div id="jp-carousel-comment-form-container">
+<span id="jp-carousel-comment-form-spinner"> </span>
+<div id="jp-carousel-comment-post-results"></div>
+<div id="jp-carousel-comment-form-commenting-as">
+<p id="jp-carousel-commenting-as">
+													You must be <a class="jp-carousel-comment-login" href="../../../../index.html">logged in</a> to post a comment.												</p>
+</div>
+</div>
+</div>
+<div class="jp-carousel-image-meta">
+<div class="jp-carousel-title-and-caption">
+<div class="jp-carousel-photo-info">
+<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+</div>
+<div class="jp-carousel-photo-description"></div>
+</div>
+<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+<a class="jp-carousel-image-download" style="display: none;" target="_blank">
+<svg fill="none" height="24" viewbox="0 0 25 24" width="25" xmlns="http://www.w3.org/2000/svg">
+<mask height="18" id="mask0" mask-type="alpha" maskunits="userSpaceOnUse" width="19" x="3" y="3">
+<path clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white" fill-rule="evenodd"></path>
+</mask>
+<g mask="url(#mask0)">
+<rect fill="#FFFFFF" height="24" width="23.8823" x="0.870605"></rect>
+</g>
+</svg>
+<span class="jp-carousel-download-text"></span>
+</a>
+<div class="jp-carousel-image-map" style="display: none;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/rc-scene.com\/2022\/04\/10\/2-years-rc-scene-emergency-response-plan-update\/":16439};
+	</script>
+<div class="actnbr-pub-blank-canvas-blocks actnbr-has-follow" id="actionbar" style="display: none;">
+<ul>
+<li class="actnbr-btn actnbr-hidden">
+<a class="actnbr-action actnbr-actn-follow" href="">
+<svg class="gridicon gridicons-reader-follow" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span>
+</a>
+<a class="actnbr-action actnbr-actn-following no-display" href="">
+<svg class="gridicon gridicons-reader-following" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"></path></g></svg><span>Following</span>
+</a>
+<div class="actnbr-popover tip tip-top-left actnbr-notice" id="follow-bubble">
+<div class="tip-arrow"></div>
+<div class="tip-inner actnbr-follow-bubble">
+<ul>
+<li class="actnbr-sitename">
+<a href="../../../../index.html">
+<img alt="" class="avatar avatar-50" height="50" src="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=50" width="50"/>				RC SCENE - Safe NOT Scam! Research Chemicals			</a>
+</li>
+<form accept-charset="utf-8" action="https://subscribe.wordpress.com" method="post" style="display: none;">
+<div class="actnbr-follow-count">Join 692 other followers</div>
+<div>
+<input aria-label="Enter your email address" class="actnbr-email-field" name="email" placeholder="Enter your email address" type="email"/>
+</div>
+<input name="action" type="hidden" value="subscribe"/>
+<input name="blog_id" type="hidden" value="172868107"/>
+<input name="source" type="hidden" value="https://rc-scene.com/2022/04/10/2-years-rc-scene-emergency-response-plan-update/"/>
+<input name="sub-type" type="hidden" value="actionbar-follow"/>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="1351bfe72e"/> <div class="actnbr-button-wrap">
+<button type="submit" value="Sign me up">
+												Sign me up											</button>
+</div>
+</form>
+<li class="actnbr-login-nudge">
+<div>
+											Already have a WordPress.com account? <a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Frc-scene.com%252F2022%252F04%252F10%252F2-years-rc-scene-emergency-response-plan-update%252F">Log in now.</a> </div>
+</li>
+</ul>
+</div>
+</div>
+</li>
+<li class="actnbr-ellipsis actnbr-hidden">
+<svg class="gridicon gridicons-ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"></path></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more">
+<div class="tip-arrow"></div>
+<div class="tip-inner">
+<ul>
+<li class="actnbr-sitename">
+<a href="../../../../index.html">
+<img alt="" class="avatar avatar-50" height="50" src="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=50" width="50"/>				RC SCENE - Safe NOT Scam! Research Chemicals			</a>
+</li>
+<li class="actnbr-folded-customize">
+<a href="https://wordpress.com/site-editor/researchchemicalscene.wordpress.com">
+<svg class="gridicon gridicons-customize" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"></path></g></svg> <span>Edit Site</span>
+</a>
+</li>
+<li class="actnbr-folded-follow">
+<a class="actnbr-action actnbr-actn-follow" href="">
+<svg class="gridicon gridicons-reader-follow" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span>
+</a>
+<a class="actnbr-action actnbr-actn-following no-display" href="">
+<svg class="gridicon gridicons-reader-following" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"></path></g></svg><span>Following</span>
+</a>
+</li>
+<li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li>
+<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Frc-scene.com%252F2022%252F04%252F10%252F2-years-rc-scene-emergency-response-plan-update%252F">Log in</a></li>
+<li class="actnbr-shortlink"><a href="https://wp.me/pbHkTh-4h9">Copy shortlink</a></li>
+<li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li>
+<li class="actnbr-reader">
+<a href="https://wordpress.com/read/blogs/172868107/posts/16439">
+											View post in Reader										</a>
+</li>
+<li class="actnbr-subs">
+<a href="https://subscribe.wordpress.com/">Manage subscriptions</a>
+</li>
+<li class="actnbr-fold"><a href="">Collapse this bar</a></li>
+</ul>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+<script id="jetpack-carousel-js-extra">
+var jetpackSwiperLibraryPath = {"url":"\/wp-content\/mu-plugins\/carousel\/swiper-bundle.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/rc-scene.com\/wp-admin\/admin-ajax.php","nonce":"cd33a0bff2","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"white","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"1","require_name_email":"1","login_url":"https:\/\/researchchemicalscene.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Frc-scene.com%2F2022%2F04%2F10%2F2-years-rc-scene-emergency-response-plan-update%2F","blog_id":"172868107","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=172868107&v=wpcom&tz=-7&user_id=0&subd=researchchemicalscene","is_public":"1"};
+</script>
+<script id="jetpack-instant-search-js-translations" type="text/javascript">
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "jetpack-search-pkg", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type="text/javascript">
+var JetpackInstantSearchOptions=JSON.parse(decodeURIComponent("%7B%22overlayOptions%22%3A%7B%22colorTheme%22%3A%22light%22%2C%22enableInfScroll%22%3Atrue%2C%22enableSort%22%3Atrue%2C%22highlightColor%22%3A%22%23FFC%22%2C%22overlayTrigger%22%3A%22immediate%22%2C%22resultFormat%22%3A%22product%22%2C%22showPoweredBy%22%3Atrue%2C%22defaultSort%22%3A%22relevance%22%2C%22excludedPostTypes%22%3A%5B%22jetpack-testimonial%22%5D%7D%2C%22homeUrl%22%3A%22https%3A%5C%2F%5C%2Frc-scene.com%22%2C%22locale%22%3A%22en%22%2C%22postsPerPage%22%3A10%2C%22siteId%22%3A172868107%2C%22postTypes%22%3A%7B%22post%22%3A%7B%22singular_name%22%3A%22Post%22%2C%22name%22%3A%22Posts%22%7D%2C%22page%22%3A%7B%22singular_name%22%3A%22Page%22%2C%22name%22%3A%22Pages%22%7D%2C%22attachment%22%3A%7B%22singular_name%22%3A%22Media%22%2C%22name%22%3A%22Media%22%7D%2C%22jetpack-testimonial%22%3A%7B%22singular_name%22%3A%22Testimonial%22%2C%22name%22%3A%22Testimonials%22%7D%7D%2C%22webpackPublicPath%22%3A%22https%3A%5C%2F%5C%2Fs2.wp.com%5C%2Fwp-content%5C%2Fmu-plugins%5C%2Fjetpack-packages%5C%2Fproduction%5C%2Fjetpack_vendor%5C%2Fautomattic%5C%2Fjetpack-search%5C%2Fbuild%5C%2Finstant-search%5C%2F%22%2C%22isPhotonEnabled%22%3Atrue%2C%22apiRoot%22%3A%22https%3A%5C%2F%5C%2Fpublic-api.wordpress.com%5C%2F%22%2C%22apiNonce%22%3A%229ebd36a797%22%2C%22isPrivateSite%22%3Afalse%2C%22isWpcom%22%3Atrue%2C%22hasOverlayWidgets%22%3Atrue%2C%22widgets%22%3A%5B%7B%22filters%22%3A%5B%7B%22name%22%3A%22Mentions%22%2C%22type%22%3A%22taxonomy%22%2C%22taxonomy%22%3A%22mentions%22%2C%22count%22%3A3%2C%22widget_id%22%3A%22jetpack-search-filters-4%22%2C%22filter_id%22%3A%22taxonomy_0%22%7D%2C%7B%22name%22%3A%22Categories%22%2C%22type%22%3A%22taxonomy%22%2C%22taxonomy%22%3A%22category%22%2C%22count%22%3A7%2C%22widget_id%22%3A%22jetpack-search-filters-4%22%2C%22filter_id%22%3A%22taxonomy_1%22%7D%2C%7B%22name%22%3A%22Tags%22%2C%22type%22%3A%22taxonomy%22%2C%22taxonomy%22%3A%22post_tag%22%2C%22count%22%3A6%2C%22widget_id%22%3A%22jetpack-search-filters-4%22%2C%22filter_id%22%3A%22taxonomy_2%22%7D%2C%7B%22name%22%3A%22Year%22%2C%22type%22%3A%22date_histogram%22%2C%22count%22%3A6%2C%22field%22%3A%22post_date%22%2C%22interval%22%3A%22year%22%2C%22widget_id%22%3A%22jetpack-search-filters-4%22%2C%22filter_id%22%3A%22date_histogram_3%22%7D%5D%2C%22widget_id%22%3A%22jetpack-search-filters-4%22%7D%5D%2C%22widgetsOutsideOverlay%22%3A%5B%5D%2C%22hasNonSearchWidgets%22%3Afalse%7D"));
+</script>
+<script crossorigin="anonymous" src="https://s2.wp.com/_static/??-eJx9TUsKwjAQvZB1KBQ/C/EoMk6GNmmaxGSmenwjGHHVzePxvvBMHcUgHARcAcOrJU6vvSs7+LMW7ZLX0YYC3s5c4KGsPGEwnvNGmDBHLezBsSSkuWvCRqdFP4Bj/Uo5GiWxMTTvtnIwMQOqxAVFLP1ahTHTBHe13kCdEwzSRJe+rL5fl0t/GE790B+Hs3sDr79iyw==" type="text/javascript"></script>
+<script crossorigin="anonymous" id="jp-tracks-js" src="#"></script>
+<script id="comment-like-js-extra">
+var comment_like_text = {"loading":"Loading...","swipeUrl":"https:\/\/s2.wp.com\/wp-content\/mu-plugins\/comment-likes\/js\/lib\/swipe.js?ver=20131008"};
+</script>
+<script id="coblocks-lightbox-js-extra">
+var coblocksLigthboxData = {"closeLabel":"Close Gallery","leftLabel":"Previous","rightLabel":"Next"};
+</script>
+<script id="sharing-js-js-extra">
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin="anonymous" src="https://s2.wp.com/_static/??-eJx9jkkOgzAMRS9Uxw2gDouqZzEhhUAmxaH0+I2EqiIWrGx/+T19XCKo4LP2Gd0M0c698YwqOFcisGbSjOMuECOfcAP+qdYGNTFWQt6EBDYuWg1Jv4XEznBeTetTUfVDbsNnb9vUoM4ZDy0ldMRZp7JBTlToA0hRCjNrC0ssrXfnARcDZ3hZMgl5oGR8/5sFerqHvDT35lxV13r8Agxfckk=" type="text/javascript"></script>
+<script type="text/javascript">
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-telegram' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-telegram' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script defer="" src="#"></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'172868107','blog_tz':'-7','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'172868107','v':'wpcom','tz':'-7','user_id':'0','post':'16439','subd':'researchchemicalscene'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGRQblRsL2ldZVdGbyVLa2ZkcjNXR2V5Zj1QSjlpVkVYcF9+ZGdObVBGZlVpMSx8THg1bW9SMnxBVHptc0s3M2s/ZVhlRzElU3B4bW9VXVtxWTk1K1UydTJoRXlOS2srVy8wY1JWT3VhNDcwJkR1RSZnVFhDYXZXU0gzT1dCMyVWNmxHeG9JZitTVVM2cUY/ZUp1WkhFYTJmclo0RWNOXUU4W34wTEVFXWRQWUpGd1hDLStaY1dEP2RnUn5xWmdPLmRwND9CWEQweC9EQV1UcDlDR2JyNUZTbXZf'}]);
+_stq.push([ 'clickTrackerInit', '172868107', '16439' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;"/></noscript>
+<!-- Jetpack Cloudflare Web Analytics -->
+<script data-cf-beacon='{"token": "F28be080be78ad60c25437c3c8ccf4d9"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js">
+</script>
+<!-- End Jetpack Cloudflare Web Analytics -->
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>
+<!--
+	generated in 0.226 seconds
+	166285 bytes batcached for 300 seconds
+-->

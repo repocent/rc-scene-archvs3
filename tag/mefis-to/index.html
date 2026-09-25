@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="#" rel="pingback"/>
+<title>mefis.to – RC SCENE – Safe NOT Scam! Research Chemicals</title>
+<meta content="G-VFK22ENTRM" name="google-site-verification"/>
+<meta content="0079cf44ef2a0a2b63a09ab147fc06f9" name="p:domain_verify"/>
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9yYy1zY2VuZS5jb20%3D"
+		+ "&wpcomid=172868107"
+		+ "&time=1610829560";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="../../index.html" rel="dns-prefetch"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Comments Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » mefis.to Tag Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1605528427h&ver=5.6-RC5-49737"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s0.wp.com/_static/??-eJydkdtOwzAMhl+I1JRtTLtAPMqUg5Wl5KTYofTtl7IOJkAFcRPZf/xZ/m0Ys9ApMkaGUEX21bpIMGadgqDgPE5fsk4T3cENdmVsbanCYttPQXg9dPtuA6o6b0D5pF+Ed6rIMgHx5PEPfd4pggE5yxmXU6osbHHmvy2KZBct/YLrtGAP3a5ZMI74QxM/oze7m903PWTJc0VA4yR6DK1sDRudscgNp2ssGN9WkcUVHF3Uy6KbzDKyIJRFn2DIS9SpGs363JcrK5ULEon2BleD4FOb/PvRLzLkqkBjkTWmz50+h6f+sb/f7vabQz+cATei5OY=?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="wp-block-library-inline-css">
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Karla%3A400%2C400italic%2C700%2C700italic%7CMontserrat%3A400%2C700&amp;subset=latin%2Clatin-ext" id="cerauno-fonts-css" media="all" rel="stylesheet"/>
+<link href="https://s0.wp.com/_static/??-eJyNjuEKwjAMhF/IGCdM5g/xWWqXddW2KU1L8e2tUxARhn/Chct3OawRNIdMIWOeyZNgLBfUlFQJjFOzZJmgKgl72mqRDa5TNmiUfHcENWr2P4gvEF0xNghWOxpqL4RU0jO2y7eElwNTWqDxnxAqzeWbJXCqYiYfncqt29JlLcAQg2OtsuXwtcDklE1raKKLY9OkWcp/1id09qeuP+66Q78fhusDhSaIfg==?cssminify=yes" id="all-css-2-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&amp;cssminify=yes" id="print-css-3-1" media="print" rel="stylesheet" type="text/css"/>
+<style id="jetpack-global-styles-frontend-style-inline-css">
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link href="https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&amp;cssminify=yes" id="all-css-6-1" media="all" rel="stylesheet" type="text/css"/>
+<script id="wpcom-actionbar-placeholder-js-extra">
+var actionbardata = {"siteID":"172868107","siteName":"RC SCENE - Safe NOT Scam! Research Chemicals","siteURL":"https:\/\/rc-scene.com","icon":"<img alt='' src='https:\/\/researchchemicalscene.files.wordpress.com\/2020\/09\/cropped-rc-scene-on-white-v2.png?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/cerauno","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Frc-scene.com%2F2020%2F11%2F30%2Fmefis-to-4-mmc-analogue-2020-trusted-shop-review%2F&signup_flow=account&domain=rc-scene.com","themeURL":"https:\/\/wordpress.com\/theme\/cerauno\/","xhrURL":"https:\/\/rc-scene.com\/wp-admin\/admin-ajax.php","nonce":"d14a486efc","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"9bd3d79538\" \/>","referer":"https:\/\/rc-scene.com\/tag\/mefis-to\/","canFollow":"1","feedID":"105365195","statusMessage":"","customizeLink":"https:\/\/researchchemicalscene.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fresearchchemicalscene.wordpress.com%2Ftag%2Fmefis-to%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Cerauno","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 143 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Frc-scene.com%2F2020%2F11%2F30%2Fmefis-to-4-mmc-analogue-2020-trusted-shop-review%2F&signup_flow=account&domain=rc-scene.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script src="https://s0.wp.com/_static/??/wp-content/js/postmessage.js,/wp-content/js/mobile-useragent-info.js,/wp-includes/js/jquery/jquery.js?m=1609849039j" type="text/javascript"></script>
+<link href="https://researchchemicalscene.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="mefis.to – RC SCENE – Safe NOT Scam! Research Chemicals" property="og:title"/>
+<meta content="https://rc-scene.com/tag/mefis-to/" property="og:url"/>
+<meta content="RC SCENE - Safe NOT Scam! Research Chemicals" property="og:site_name"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=200" property="og:image"/>
+<meta content="200" property="og:image:width"/>
+<meta content="200" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@rc_scene" name="twitter:creator"/>
+<meta content="@rc_scene" name="twitter:site"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="../../osd.xml" rel="search" title="RC SCENE - Safe NOT Scam! Research Chemicals" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<meta content="#fcfcfc" name="theme-color"/>
+<meta content="RC SCENE - Safe NOT Scam! Research Chemicals" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Legal Aspects, Scammers, Health" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://rc-scene.com/feed/;icon-uri=https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Posts about mefis.to written by Trusted RC Shops" name="description"/>
+<style type="text/css">
+			.site-title,
+		.site-description {
+			position: absolute;
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+		</style>
+<style id="custom-background-css" type="text/css">
+body.custom-background { background-color: #fcfcfc; }
+</style>
+<style id="custom-colors-css" type="text/css">body,.site-description{color:#495762}.main-navigation a,.main-navigation a:visited{color:#495762}.main-navigation a:hover,.main-navigation a:focus{color:#364048}button,input[type=button],input[type=reset],input[type=submit]{color:#2e373d}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover,button:focus,input[type=button]:focus,input[type=reset]:focus,input[type=submit]:focus,button:active,input[type=button]:active,input[type=reset]:active,input[type=submit]:active{color:#2e373d}.main-navigation>div:first-of-type a,.main-navigation ul ul a,.social-links,.main-navigation ul ul,.site-info,.entry-footer,.footer-widgets,.main-navigation,.page-header,.site-content,table,.widget ul li,.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{border-color:#eee}.main-navigation>div:first-of-type a,.main-navigation ul ul a,.social-links,.main-navigation ul ul,.site-info,.entry-footer,.footer-widgets,.main-navigation,.page-header,.site-content,table,.widget ul li,.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{border-color:rgba(238,238,238,.3)}body,.main-navigation ul ul{background-color:#fcfcfc}tr:nth-of-type(2n){background-color:#f7f7f7}button,input[type=button],input[type=reset],input[type=submit]{background-color:#1abc9c}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover,button:focus,input[type=button]:focus,input[type=reset]:focus,input[type=submit]:focus,button:active,input[type=button]:active,input[type=reset]:active,input[type=submit]:active{background-color:#16a689}.social-links li a:before{color:#0a7963}.social-links li a:hover:before{color:#0a7963}.entry-footer a,.entry-footer a:visited,.entry-meta a,.entry-meta a:visited,a,a:visited{color:#0a7963}.site-main .comment-navigation a,.site-main .posts-navigation a,.site-main .post-navigation a{color:#0a7963}.site-main .comment-navigation a:visited,.site-main .posts-navigation a:visited,.site-main .post-navigation a:visited{color:#0a7963}.entry-footer{color:#0a7963}a:focus,a:hover{color:#004739}.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{color:#0a7963}h1,h2,h3,h4,h5,h6{color:#c0440b}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:#c0440b}.entry-title,.entry-title a,.entry-title a:visited{color:#c0440b}.site-title a,.site-title a:visited{color:#c0440b}</style>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=32" rel="icon" sizes="32x32"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=192" rel="icon" sizes="192x192"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=180" rel="apple-touch-icon"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=270" name="msapplication-TileImage"/>
+<link href="https://s2.wp.com/?custom-css=1&amp;csblog=bHkTh&amp;cscache=6&amp;csrev=406" id="custom-css-css" rel="stylesheet" type="text/css"/>
+<!-- Jetpack Google Analytics -->
+<script type="text/javascript">
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', 'UA-161440209-1']);
+_gaq.push(['_trackPageview']);
+				(function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+			</script>
+<!-- End Jetpack Google Analytics -->
+</head>
+<body class="archive tag tag-mefis-to tag-709366261 custom-background customizer-styles-applied has-site-logo highlander-enabled highlander-light custom-colors">
+<div class="hfeed site" id="page">
+<a class="skip-link screen-reader-text" href="../../index.html#content">Skip to content</a>
+<header class="site-header" id="masthead" role="banner">
+<nav class="main-navigation clear" id="site-navigation" role="navigation">
+<button aria-controls="primary-menu" aria-expanded="false" class="menu-toggle">Menu</button>
+<div class="menu-main-menu-header-container"><ul class="menu" id="primary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-15" id="menu-item-15"><a href="../../index.html">&lt; Home &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-630" id="menu-item-630"><a href="../../trusted-research-chemical-shops/index.html">&lt; Research Chemical Vendors &gt;</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3918" id="menu-item-3918"><a href="../../trusted-research-chemical-shops/index.html">Trusted Research Chemical Vendors * EUROPE</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3917" id="menu-item-3917"><a href="../../trusted-research-chemical-vendors-asia/index.html">Trusted Research Chemical Vendors * ASIA</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3915" id="menu-item-3915"><a href="../../trusted-research-chemical-vendors-usa/index.html">Trusted Research Chemical Vendors * USA</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3916" id="menu-item-3916"><a href="../../trusted-research-chemical-vendors-canada/index.html">Trusted Research Chemical Vendors * CANADA</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2091" id="menu-item-2091"><a href="../../category/trusted-shop-reviews/index.html">&lt; Shop Reviews &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-14" id="menu-item-14"><a href="../../blog-feed/index.html">&lt; All Articles &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7067" id="menu-item-7067"><a href="../../news/index.html">&lt;  NEWS &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-486" id="menu-item-486"><a href="../../contact/index.html">&lt; Contact &gt;</a></li>
+</ul></div>
+</nav><!-- #site-navigation -->
+<div class="site-branding">
+<a class="site-logo-link" href="../../index.html" itemprop="url" rel="home"><img alt="RC SCENE - Safe NOT Scam : Logo" class="site-logo attachment-cerauno-site-logo" data-attachment-id="9050" data-comments-opened="1" data-image-description="&lt;p&gt;rc-scene, rc scene, logo, header , 180&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"K\u00d8MPR\u00d8M\u00c6T","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"RC SCENE - Safe NOT Scam! - Research Chemicals Info Page - Logo","orientation":"0"}' data-image-title="RC SCENE – Safe NOT Scam! – Research Chemicals Info Page – Logo" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg" data-orig-size="180,131" data-permalink="https://rc-scene.com/rc-scene-safe-not-scam-research-chemicals-info-page-logo/" data-size="cerauno-site-logo" height="131" itemprop="logo" loading="lazy" sizes="(max-width: 180px) 100vw, 180px" src="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" srcset="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg 180w, https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=150 150w" width="180"/></a> <h1 class="site-title"><a href="../../index.html" rel="home">RC SCENE – Safe NOT Scam! Research Chemicals</a></h1>
+<h2 class="site-description">Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Legal Aspects, Scammers, Health</h2>
+</div><!-- .site-branding -->
+</header><!-- #masthead -->
+<div class="site-content" id="content">
+<div class="content-area" id="primary">
+<main class="site-main" id="main" role="main">
+<header class="page-header">
+<h1 class="page-title">Tag: <span>mefis.to</span></h1> </header><!-- .page-header -->
+<article class="post-9450 post type-post status-publish format-standard has-post-thumbnail hentry category-europe category-europe-2 category-rc-vendors category-research-chemicals-knowledge category-ships-to-ausralia category-ships-to-australia category-ships-to-australia-2 category-ships-to-the-uk category-ships-to-the-uk-2 category-ships-to-the-us category-ships-to-the-usa category-substances category-trusted-rc-vendors category-trusted-rc-vendors-link-list category-trusted-shop-reviews tag-65608 tag-4-mmc tag-4-mmc-analogue tag-4-mmc-mephedrone tag-mefis-to tag-mehedrone tag-photos tag-proudct-photos tag-safenotscam tag-shop-discussion-2 tag-shopping-experience tag-trusted-shop-review tag-trusted-vendor" id="post-9450">
+<header class="entry-header">
+<h1 class="entry-title"><a href="../../2020/11/30/mefis-to-4-mmc-analogue-2020-trusted-shop-review/index.html" rel="bookmark">mefis.to 4-MMC Analogue 2020 (Trusted Shop Review)</a></h1>
+<div class="featured-image">
+<a href="../../2020/11/30/mefis-to-4-mmc-analogue-2020-trusted-shop-review/index.html" title="mefis.to 4-MMC Analogue 2020 (Trusted Shop Review)"><img alt="mefis.to Research Chemicals 4-MMC Analogue 2020" class="attachment-cerauno-home size-cerauno-home wp-post-image" data-attachment-id="9457" data-comments-opened="1" data-image-description="&lt;p&gt;mefis.to&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"Ren\u00e9","camera":"","caption":"","created_timestamp":"0","copyright":"rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"mefis.to Research Chemicals 4-MMC Analogue 2020","orientation":"0"}' data-image-title="mefis.to Research Chemicals 4-MMC Analogue 2020" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=900" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=600" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg" data-orig-size="1200,800" data-permalink="https://rc-scene.com/mefis-to-research-chemicals-4-mmc-analogue-2020-2/" height="300" loading="lazy" sizes="(max-width: 900px) 100vw, 900px" src="https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=900&amp;h=300&amp;crop=1" srcset="https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=900&amp;h=300&amp;crop=1 900w, https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=150&amp;h=50&amp;crop=1 150w, https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=625&amp;h=208&amp;crop=1 625w, https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=768&amp;h=256&amp;crop=1 768w, https://researchchemicalscene.files.wordpress.com/2020/11/analog-4-mmc-champagne-analogue-by-mefis.to_.jpg?w=1200&amp;h=400&amp;crop=1 1200w" width="900"/></a>
+</div>
+</header><!-- .entry-header -->
+<div class="entry-summary">
+<p>A kick-start to the car that will be giving birth to a new future? As soon as you open the package, you will notice a somewhat familiar smell, slightly lemony. The 4-MMC analog is most likely to be emulating Neorganics Caps, which became very popular from 2007 onwards, and which in addition to Mephedrone (often… <a class="more-link" href="../../2020/11/30/mefis-to-4-mmc-analogue-2020-trusted-shop-review/index.html">Read More <span class="screen-reader-text">mefis.to 4-MMC Analogue 2020 (Trusted Shop Review)</span></a></p>
+</div><!-- .entry-excerpt -->
+<div class="entry-meta">
+<span class="posted-on"><a href="../../2020/11/30/mefis-to-4-mmc-analogue-2020-trusted-shop-review/index.html" rel="bookmark"><time class="entry-date published" datetime="2020-11-30T06:56:28-08:00">November 30, 2020</time><time class="updated" datetime="2020-12-21T18:44:31-08:00">December 21, 2020</time></a></span><span class="byline"> <span class="author vcard"><a class="url fn n" href="../../author/6r2374vpezp1qfj278yyaq/index.html">Trusted RC Shops</a></span></span><span class="comments-link"><a href="../../2020/11/30/mefis-to-4-mmc-analogue-2020-trusted-shop-review/index.html">1 Comment</a></span> </div><!-- .entry-meta -->
+</article><!-- #post-## -->
+</main><!-- #main -->
+</div><!-- #primary -->
+<div class="widget-area sidebar-left" id="secondary" role="complementary">
+<aside class="widget jetpack-filters widget_search" id="jetpack-search-filters-1"> <div class="jetpack-instant-search-wrapper" id="jetpack-search-filters-1-wrapper">
+<h1 class="widget-title">WE pay 6 USD each month for this improved search feature. Use it or lose it.</h1><div class="jetpack-search-form"><form action="https://rc-scene.com/" class="search-form" method="get" role="search">
+<label>
+<span class="screen-reader-text">Search for:</span>
+<input class="search-field" name="s" placeholder="Search …" type="search" value=""/>
+</label>
+<input class="search-submit" type="submit" value="Search"/>
+<input name="orderby" type="hidden" value=""/><input name="order" type="hidden" value=""/></form></div></div></aside><aside class="widget widget_links" id="linkcat-703963384"><h1 class="widget-title">Your 2 Cents</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../news/index.html" title="The money will be used to cover basic expenses like web hosting, PlugIns, Software Licenses, etc. – Rest assured that no one will ever make profit with the site!">THANK YOU so much for supporting this non-profit project with a small donation or by sharing your experiences! 👩‍🚀 💚 👨‍🚀</a></li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696250474"><h1 class="widget-title">Shop Reviews</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../category/trusted-shop-reviews/index.html">All Shop Reviews</a></li>
+<li><a href="../../category/trusted-shop-reviews/europe/index.html">Europe</a></li>
+<li><a href="../../category/trusted-shop-reviews/china/index.html">China</a></li>
+<li><a href="../../category/trusted-shop-reviews/USA/index.html">USA</a></li>
+<li><a href="../../category/trusted-shop-reviews/canada/index.html">Canada</a></li>
+<li><a href="../../category/trusted-shop-reviews/ships-to-the-uk/index.html">Ships to the UK</a></li>
+<li><a href="../../category/trusted-shop-reviews/ships-to-the-usa/index.html">Ships to the USA</a></li>
+<li><a href="../../category/trusted-shop-reviews/ships-to-australia/index.html" title="Shops that ship to Australia">Ships to Australia</a></li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696250475"><h1 class="widget-title">Warnings</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../category/warnings/scam-alert-known-scammers/index.html" title=" will never send you anything, they will just act friendly to steal your money!">Scammers</a>
+ will never send you anything, they will just act friendly to steal your money!</li>
+<li><a href="../../category/warnings/toxic-substances/index.html" title="and you might end up in hospital.">Toxic / Mislabeled Substances</a>
+and you might end up in hospital.</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696711682"><h1 class="widget-title">Trusted Shops</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../trusted-research-chemical-shops/index.html" title="list of reliable shops and legit email vendors">Trusted RC Vendors</a>
+list of reliable shops and legit email vendors</li>
+<li><a href="http://buy.research-chemicals.online/" rel="me" target="_blank" title="Buy Research Chemicals Online – mobile friendly version">Trusted Shops mobile edition</a>
+Buy Research Chemicals Online – mobile friendly version</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-701516573"><h1 class="widget-title">Friendly forums</h1>
+<ul class="xoxo blogroll">
+<li><a href="https://twitter.com/rc_scene" rel="me" target="_blank">Twitter</a></li>
+<li><a href="https://www.trustpilot.com/review/rc-scene.com" rel="colleague" target="_blank">Trustpilot</a></li>
+<li><a href="https://forum.drug.cafe/" rel="colleague" target="_blank">drug.cafe</a></li>
+<li><a href="https://www.psychonaut.fr/" rel="colleague">psychonaut.fr</a></li>
+</ul>
+</aside>
+</div><!-- #secondary -->
+<div class="widget-area sidebar-right" id="tertiary" role="complementary">
+<aside class="widget widget_google_translate_widget" id="google_translate_widget-3"><h1 class="widget-title">Translate this page</h1><div id="google_translate_element"></div></aside><aside class="widget widget_links" id="linkcat-697708460"><h1 class="widget-title">Knowledge</h1>
+<ul class="xoxo blogroll">
+<li><a href="#" title="What are these? Substances, History, Highlights, and Future Outlook. Latest update: What do Chinese labs look like?">Research Chemicals explained</a>
+What are these? Substances, History, Highlights, and Future Outlook. Latest update: What do Chinese labs look like?</li>
+<li><a href="https://thedrugclassroom.com/" target="_blank" title="Substance Information Videos">The Drug Classroom (Videos)</a>
+Substance Information Videos</li>
+<li><a href="https://www.youtube.com/channel/UCCwC_kDHfa5h7kF71tl19TQ" target="_blank" title="Scientists working in the field of drug abuse and substance information. You may ask them questions, too!">Global Drug Survey on YouTube</a>
+Scientists working in the field of drug abuse and substance information. You may ask them questions, too!</li>
+<li><a href="https://twitter.com/NPSDiscovery" target="_blank" title="Novel Psychoactive Substances. Forensic Toxicology. Forensic Chemistry. Public Health. Public Safety.">NPS Discovery</a>
+Novel Psychoactive Substances. Forensic Toxicology. Forensic Chemistry. Public Health. Public Safety.</li>
+<li><a href="https://twitter.com/Cayman_Forensic" title="Articles about all kinds of chems and substance classes, including Research Chemicals">Cayman Forensic</a>
+Articles about all kinds of chems and substance classes, including Research Chemicals</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-695089967"><h1 class="widget-title">Prevention &amp; Harm Reduction</h1>
+<ul class="xoxo blogroll">
+<li><a href="https://drugsdata.org/" target="_blank" title="An overview of (problematic) drug samples tested in the US, UK, Switzerland, Spain, Slovenia, Scotland, Portugal, Italy, Germany and Austria.">DrugsData.org (Erowid Center)</a>
+An overview of (problematic) drug samples tested in the US, UK, Switzerland, Spain, Slovenia, Scotland, Portugal, Italy, Germany and Austria.</li>
+<li><a href="https://www.getsmartaboutdrugs.gov/" target="_blank" title="A DEA Resource for Parents, Educators &amp; Caregivers">Get Smart About Drugs</a>
+A DEA Resource for Parents, Educators &amp; Caregivers</li>
+<li><a href="https://getyourdrugstested.com/" target="_blank" title="offer anonymous and free drug testing for Canadian citizens.">Get Your Drugs Tested Vancouver (CAN)</a>
+offer anonymous and free drug testing for Canadian citizens.</li>
+<li><a href="https://www.justthinktwice.gov/" title="Get the facts about drugs">Just Think Twice</a>
+Get the facts about drugs</li>
+<li><a href="https://www.deadiversion.usdoj.gov/synthetic_drugs/index.html" title="Help to protect yourself, your family, and your local community from the threat of Synthetic Drugs">Synhetic Drugs Consumer Alert</a>
+Help to protect yourself, your family, and your local community from the threat of Synthetic Drugs</li>
+</ul>
+</aside>
+<aside class="widget widget_nav_menu" id="nav_menu-9"><h1 class="widget-title">About</h1><div class="menu-footer-container"><ul class="menu" id="menu-footer"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8940" id="menu-item-8940"><a href="../../contact/index.html">Contact &amp; PGP Key</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8944" id="menu-item-8944"><a href="../../terms-of-use-disclaimer/index.html">Terms of Use &amp; Disclaimer</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8943" id="menu-item-8943"><a href="../../privacy-policy-cookies/index.html">Privacy Policy &amp; Cookies</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8951" id="menu-item-8951"><a href="../../testimonials-they-say/index.html">Testimonials</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8946" id="menu-item-8946"><a href="../../about/index.html">Why?</a></li>
+</ul></div></aside><aside class="widget widget_text" id="text-3"> <div class="textwidget"><aside id="copyright">
+<p style="margin:0;font-family:Calibri;font-size:11pt;"><strong>© 2020</strong></p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">_______________</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;"><strong>KØMPRØMÆT</strong></p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">——————————–</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">——————————–</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">—</p>
+</aside>
+</div>
+</aside></div><!-- #tertiary -->
+</div><!-- #content -->
+<footer class="site-footer" id="colophon" role="contentinfo">
+<div class="site-info">
+<a href="https://wordpress.com/?ref=footer_custom_com" rel="nofollow">Website Built with WordPress.com</a>.
+			
+					</div><!-- .site-info -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+<!-- -->
+<div class="jetpack-instant-search__widget-area" style="display: none">
+</div>
+<script id="grofiles-cards-js" src="#"></script>
+<script id="wpgroho-js-extra">
+var WPGroHo = {"my_hash":""};
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h" type="text/javascript"></script>
+<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+<div style="display:none">
+</div>
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20201002";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+<aside class="widget widget_eu_cookie_law_widget" id="eu_cookie_law_widget-6">
+<div class="hide-on-time" data-consent-expiration="365" data-hide-timeout="30" id="eu-cookie-law">
+<form method="post">
+<input class="accept" type="submit" value="Close and accept"/>
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br/>
+To find out more, including how to control cookies, see here:
+				<a href="https://automattic.com/cookies" rel="nofollow">
+			Cookie Policy		</a>
+</form>
+</div>
+</aside><script src="https://s0.wp.com/_static/??/wp-content/js/devicepx.js,/wp-includes/js/dist/vendor/wp-polyfill.min.js?m=1597077481j" type="text/javascript"></script>
+<script type="text/javascript">
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s1.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s2.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s1.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s2.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+</script>
+<script id="wp-i18n-js" src="https://s2.wp.com/wp-content/plugins/gutenberg-core/v9.7.3/build/i18n/index.js?m=1610728641h&amp;ver=57a9d4a3d57f6a912db0df3ae9e58c98"></script>
+<script id="jetpack-instant-search-js-translations" type="text/javascript">
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "jetpack", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type="text/javascript">
+var JetpackInstantSearchOptions=JSON.parse(decodeURIComponent("%7B%22overlayOptions%22%3A%7B%22colorTheme%22%3A%22light%22%2C%22enableInfScroll%22%3Atrue%2C%22enableSort%22%3Atrue%2C%22highlightColor%22%3A%22%23FFC%22%2C%22opacity%22%3A97%2C%22overlayTrigger%22%3A%22immediate%22%2C%22resultFormat%22%3A%22expanded%22%2C%22showPoweredBy%22%3Atrue%7D%2C%22homeUrl%22%3A%22https%3A%5C%2F%5C%2Frc-scene.com%22%2C%22locale%22%3A%22en-US%22%2C%22postsPerPage%22%3A10%2C%22siteId%22%3A172868107%2C%22postTypes%22%3A%7B%22post%22%3A%7B%22singular_name%22%3A%22Post%22%2C%22name%22%3A%22Posts%22%7D%2C%22page%22%3A%7B%22singular_name%22%3A%22Page%22%2C%22name%22%3A%22Pages%22%7D%2C%22attachment%22%3A%7B%22singular_name%22%3A%22Media%22%2C%22name%22%3A%22Media%22%7D%7D%2C%22webpackPublicPath%22%3A%22https%3A%5C%2F%5C%2Fs2.wp.com%5C%2Fwp-content%5C%2Fmu-plugins%5C%2Fjetpack%5C%2F_inc%5C%2Fbuild%5C%2Finstant-search%5C%2F%22%2C%22apiRoot%22%3A%22https%3A%5C%2F%5C%2Fpublic-api.wordpress.com%5C%2F%22%2C%22apiNonce%22%3A%223243739c37%22%2C%22isPrivateSite%22%3Afalse%2C%22isWpcom%22%3Atrue%2C%22defaultSort%22%3A%22relevance%22%2C%22excludedPostTypes%22%3A%5B%5D%2C%22hasOverlayWidgets%22%3Afalse%2C%22widgets%22%3A%5B%5D%2C%22widgetsOutsideOverlay%22%3A%5B%5D%7D"));
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/jetpack/_inc/build/instant-search/jp-search.bundle.js?m=1610587083h" type="text/javascript"></script>
+<script id="jp-tracks-js" src="#"></script>
+<script id="google-translate-init-js-extra">
+var _wp_google_translate_widget = {"lang":"en","layout":"0"};
+</script>
+<script src="https://s2.wp.com/_static/??-eJyNj+FOwzAMhF+I1Ay2ij+IR0Fp6qVukziKHcrjk26aQEya+s8633c+w5qN46SYFHKonpKA4yGwWwReulP3CiOJwvwrm0B+0oG/u1me4A+vE0YUyHUAh8XWxBuW7Bd5q8Rpn18Wyu1EWsyZXRVzprtDsZpb15VGj9ootMVNF/4ymetiB4m1bXkhNMGuoBhzsIr/9Ac5M2q2boFPSg50JVUsRili+wEfcHaMlMxgC0QrjWmT0dKSZEdpz+wDbv4kW907oWV8xPdD//x26Pvj8TT/AAb5tlY=" type="text/javascript"></script>
+<script id="google-translate-js" src="#"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script defer="" src="#"></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'172868107','blog_tz':'-8','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'172868107','v':'wpcom','tz':'-8','user_id':'0','subd':'researchchemicalscene'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGQ9PzdhTnQ1KytscD9vXVh1ek1fUWVpNUIlemtsTG9+cDZNa01VZHQ0cHBLRHFNWFFMaGlnbXV4QnIxSXBufFVGMjdWODdVeT8rXXpCQ3A5amdaQ1BRbVBdP3xmSzZYLEk9fkd8TStDR1o5SG5EdG9tVGVJUEcyNlVzanldVXhrQn49ZUFKa1lxenMwVVJUeDhyaEFxYjZDfkdhMWhbbTVMYm16d35DUTZLNCt3dEVFVGVfcStSR298W1c9TDJ5fGwxUms3V3ZSYVclW2xvV3h0WX53QmNrSGhjLllwb0o1LmxdN3lvJStYVT8='}]);
+_stq.push([ 'clickTrackerInit', '172868107', '0' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

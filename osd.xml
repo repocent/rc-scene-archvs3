@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+	<ShortName>researchchemical</ShortName>
+	<Description>Search RC SCENE - Safe NOT Scam! Research Chemicals - Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Legal Aspects, Scammers, Health</Description>
+	<Contact>help@wordpress.com</Contact>
+	<Url type="application/atom+xml" template="https://rc-scene.com/?s={searchTerms}&amp;feed=atom" />
+	<Url type="rss+xml" template="https://rc-scene.com/?s={searchTerms}&amp;feed=rss2" />
+	<Url type="text/html" template="https://rc-scene.com/?s={searchTerms}" method="GET" />
+	<Url type="application/opensearchdescription+xml" rel="self" template="https://rc-scene.com/osd.xml" />
+	<LongName>RC SCENE - Safe NOT Scam! Research Chemicals</LongName>
+	<Image height="16" width="16" type="image/vnd.microsoft.icon">https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=16</Image>
+	<Image height="64" width="64" type="image/png">https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=64</Image>
+	<Query role="example" searchTerms="photography" />
+	<Tags>research-chemicals safe-not-scam shop-experience netherlands trusted-shop-review cannabinoids 3-fpm 4f-mph a-php safe-or-scam</Tags>
+	<Developer>Automattic</Developer>
+	<SyndicationRight>open</SyndicationRight>
+	<AdultContent>false</AdultContent>
+	<Language>en</Language>
+	<OutputEncoding>UTF-8</OutputEncoding>
+	<InputEncoding>UTF-8</InputEncoding>
+	<moz:SearchForm>https://rc-scene.com</moz:SearchForm>
+</OpenSearchDescription>

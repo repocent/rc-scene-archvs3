@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC SCENE — Research Chemicals Archive</title>
+    <meta name="description" content="Complete offline archive of RC-Scene.com — Research chemical news, vendor reviews, scam warnings and harm reduction.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Minimal Top Nav -->
+    <nav class="topnav">
+        <div class="topnav-inner">
+            <a href="#" class="site-logo">RC SCENE</a>
+
+            <div class="nav-menus">
+                <!-- Substances Dropdown -->
+                <div class="nav-dropdown-wrap">
+                    <button class="nav-link nav-btn" id="substanceMenuBtn">Substances ↓</button>
+                    <div id="substanceMegaMenu" class="dropdown-panel hidden">
+                        <div class="dropdown-header">
+                            <span>Substances by type</span>
+                            <input type="text" id="substanceMenuSearch" class="dropdown-filter-input" placeholder="Type to filter RCs...">
+                            <button class="close-menu-btn">&times;</button>
+                        </div>
+                        <div id="substanceCategoriesGrid" class="dropdown-substance-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Vendors Dropdown -->
+                <div class="nav-dropdown-wrap">
+                    <button class="nav-link nav-btn" id="vendorMenuBtn">Shops & Vendors ↓</button>
+                    <div id="vendorMegaMenu" class="dropdown-panel hidden">
+                        <div class="dropdown-header">
+                            <span>Vendors & Shop Reviews</span>
+                            <input type="text" id="vendorMenuSearch" class="dropdown-filter-input" placeholder="Type to filter shops...">
+                            <button class="close-menu-btn">&times;</button>
+                        </div>
+                        <div id="vendorListGrid" class="dropdown-vendor-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Forum Link -->
+                <a href="./forum/index.html" class="nav-link nav-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:4px;">💬 Forum</a>
+            </div>
+
+            <!-- Search -->
+            <div class="nav-search">
+                <input type="text" id="searchInput" placeholder="Search...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-label">Offline Preservation Project</div>
+            <h1 class="hero-title">RC SCENE</h1>
+            <p class="hero-sub">Safe Not Scam. Research Chemicals News, Reviews & Harm Reduction.</p>
+        </div>
+    </section>
+
+    <main class="main">
+
+                <!-- Category Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-type="all">All</button>
+            <button class="filter-btn" data-type="category" data-val="Pyrrolidines &amp; Pyrovalerones">🔥 Pyrros</button>
+            <button class="filter-btn" data-type="category" data-val="Cathinones">⚡ Cathinones</button>
+            <button class="filter-btn" data-type="category" data-val="Amphetamines &amp; Fluorinated">💊 Amphetamines</button>
+            <button class="filter-btn" data-type="category" data-val="Dissociatives">🌀 Dissociatives</button>
+            <button class="filter-btn" data-type="category" data-val="Lysergamides (LSD Analogs)">👁️ Lysergamides</button>
+            <button class="filter-btn" data-type="category" data-val="Benzodiazepines &amp; Thienos">💤 Benzos</button>
+            <button class="filter-btn" data-type="category" data-val="Opioids &amp; Nitazenes">🔬 Opioids</button>
+            <button class="filter-btn" data-type="category" data-val="Shop Reviews &amp; Warnings">🏪 Vendor Reviews</button>
+            <button class="filter-btn" data-type="category" data-val="Forum Discussions">💬 Forum</button>
+            <button class="filter-btn" data-type="category" data-val="General RC News">📰 General News</button>
+        </div>
+
+        <!-- Section Header -->
+        <div class="section-header">
+            <div class="section-header-left">
+                <h2 id="currentTitle">All Articles</h2>
+                <span id="counterBadge" class="count-badge">0 articles</span>
+                <button id="resetFilterBtn" class="clear-btn hidden">Clear ✕</button>
+            </div>
+            <select id="sortSelect" class="sort-select">
+                <option value="az">A — Z</option>
+                <option value="za">Z — A</option>
+            </select>
+        </div>
+
+        <!-- Articles Grid -->
+        <div id="articlesGrid" class="articles-grid"></div>
+
+        <!-- Load More -->
+        <div class="loadmore-wrap">
+            <button id="loadMoreBtn" class="loadmore-btn">Load More</button>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-logo">RC SCENE</span>
+            <span class="footer-note">Complete offline archive — no external connections required.</span>
+        </div>
+    </footer>
+
+    <script src="articles.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

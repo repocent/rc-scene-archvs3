@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="#" rel="pingback"/>
+<title>Legit RC – Photos, Mini-Review &amp; Shop Discussion – RC SCENE – Safe NOT Scam! Research Chemicals</title>
+<meta content="G-VFK22ENTRM" name="google-site-verification"/>
+<meta content="0079cf44ef2a0a2b63a09ab147fc06f9" name="p:domain_verify"/>
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9yYy1zY2VuZS5jb20%3D"
+		+ "&wpcomid=172868107"
+		+ "&time=1607192233";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="../../../../../index.html" rel="dns-prefetch"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Comments Feed" type="application/rss+xml"/>
+<link href="#" rel="alternate" title="RC SCENE - Safe NOT Scam! Research Chemicals » Legit RC – Photos, Mini-Review &amp; Shop Discussion Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1605528427h&ver=5.6-RC2-49736"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s2.wp.com/_static/??-eJydketKBDEMhV/ITFx1BvaH+Cy9hJq1nZYmZZy3tzOsIuuyihRCT3K+lCa4FHB5VpoVU4MSW+BZcCkuJ5DEkdYLNTiRO7yOVYpGyUPJohfqB/bJhNalpRp6pRIeh6fhgLZx9Ghjdm8Q2VZTVxRdI/2hzU4JnkiL2XCz5qYQKvv/tqhGeQ7yC+7yGXsY+kHPol85uI5+G932+Z5PxejmSOTZUKTUbbewhX2gPutuOd9B6f02sm/T2lJJBHpM3BLoa39r39JLej5M9+M0Ph6n8fQBKu7MlQ==?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<style id="wp-block-library-inline-css">
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13;--wp--preset--font-size--normal: 16;--wp--preset--font-size--medium: 20;--wp--preset--font-size--large: 36;--wp--preset--font-size--huge: 42;--wp--preset--font-style--normal: normal;--wp--preset--font-style--italic: italic;--wp--preset--font-weight--100: 100;--wp--preset--font-weight--200: 200;--wp--preset--font-weight--300: 300;--wp--preset--font-weight--400: 400;--wp--preset--font-weight--500: 500;--wp--preset--font-weight--600: 600;--wp--preset--font-weight--700: 700;--wp--preset--font-weight--800: 800;--wp--preset--font-weight--900: 900;--wp--preset--text-decoration--underline: underline;--wp--preset--text-decoration--strikethrough: line-through;--wp--preset--text-transform--uppercase: uppercase;--wp--preset--text-transform--lowercase: lowercase;--wp--preset--text-transform--capitalize: capitalize;}.has-black-color{color: #000000;}.has-black-background-color{background-color: #000000;}.has-cyan-bluish-gray-color{color: #abb8c3;}.has-cyan-bluish-gray-background-color{background-color: #abb8c3;}.has-white-color{color: #ffffff;}.has-white-background-color{background-color: #ffffff;}.has-pale-pink-color{color: #f78da7;}.has-pale-pink-background-color{background-color: #f78da7;}.has-vivid-red-color{color: #cf2e2e;}.has-vivid-red-background-color{background-color: #cf2e2e;}.has-luminous-vivid-orange-color{color: #ff6900;}.has-luminous-vivid-orange-background-color{background-color: #ff6900;}.has-luminous-vivid-amber-color{color: #fcb900;}.has-luminous-vivid-amber-background-color{background-color: #fcb900;}.has-light-green-cyan-color{color: #7bdcb5;}.has-light-green-cyan-background-color{background-color: #7bdcb5;}.has-vivid-green-cyan-color{color: #00d084;}.has-vivid-green-cyan-background-color{background-color: #00d084;}.has-pale-cyan-blue-color{color: #8ed1fc;}.has-pale-cyan-blue-background-color{background-color: #8ed1fc;}.has-vivid-cyan-blue-color{color: #0693e3;}.has-vivid-cyan-blue-background-color{background-color: #0693e3;}.has-vivid-purple-color{color: #9b51e0;}.has-vivid-purple-background-color{background-color: #9b51e0;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);}.has-cool-to-warm-spectrum-gradient-background{background: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);}.has-blush-light-purple-gradient-background{background: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);}.has-blush-bordeaux-gradient-background{background: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);}.has-luminous-dusk-gradient-background{background: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);}.has-pale-ocean-gradient-background{background: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);}.has-electric-grass-gradient-background{background: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);}.has-midnight-gradient-background{background: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);}.has-small-font-size{font-size: 13;}.has-normal-font-size{font-size: 16;}.has-medium-font-size{font-size: 20;}.has-large-font-size{font-size: 36;}.has-huge-font-size{font-size: 42;}.has-normal-font-style{font-style: normal;}.has-italic-font-style{font-style: italic;}.has-100-font-weight{font-weight: 100;}.has-200-font-weight{font-weight: 200;}.has-300-font-weight{font-weight: 300;}.has-400-font-weight{font-weight: 400;}.has-500-font-weight{font-weight: 500;}.has-600-font-weight{font-weight: 600;}.has-700-font-weight{font-weight: 700;}.has-800-font-weight{font-weight: 800;}.has-900-font-weight{font-weight: 900;}.has-underline-text-decoration{text-decoration: underline;}.has-strikethrough-text-decoration{text-decoration: line-through;}.has-uppercase-text-transform{text-transform: uppercase;}.has-lowercase-text-transform{text-transform: lowercase;}.has-capitalize-text-transform{text-transform: capitalize;}
+</style>
+<link href="https://s1.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css,/wp-content/themes/pub/cerauno/style.css?m=1464100514j&amp;cssminify=yes" id="all-css-2-1" media="all" rel="stylesheet" type="text/css"/>
+<link crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Karla%3A400%2C400italic%2C700%2C700italic%7CMontserrat%3A400%2C700&amp;subset=latin%2Clatin-ext" id="cerauno-fonts-css" media="all" rel="stylesheet"/>
+<link href="https://s1.wp.com/_static/??-eJx9jdEKwjAMRX/IGCdM5oP4LV3NajVtStNS/HvrnhRhLyGXm3OCLYGVWCgWLHcKpJjqjJayqVFw6ZWuE0wjlUB7q7rDbcpHi1peTNCSlfCHhAqJq/NRsfmbo/6Cam/l6QnYNCwUEpvStatmS+BIgMWa4iX+BFjY+LyFZppZXF8d9quv+IGu4TKM58NwGo/T9HgDr8luNw==?cssminify=yes" id="all-css-4-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&amp;cssminify=yes" id="print-css-5-1" media="print" rel="stylesheet" type="text/css"/>
+<style id="jetpack-global-styles-frontend-style-inline-css">
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link href="https://s0.wp.com/_static/??-eJxti8sKgCAQAH8oW6KHdoi+xcTUWF1pjX4/OnSIOg0DM3BmYSgVmwrEQ2Q8XEgMmbiIFXXYgb3eQ3IPa8Ncwf/FZIJGgeToLZ+peBstg+/AIS0a72COU9OPUg69atV2AWWKN+I=?cssminify=yes" id="all-css-8-1" media="all" rel="stylesheet" type="text/css"/>
+<script id="jetpack_related-posts-js-extra">
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script id="wpcom-actionbar-placeholder-js-extra">
+var actionbardata = {"siteID":"172868107","siteName":"RC SCENE - Safe NOT Scam! Research Chemicals","siteURL":"https:\/\/rc-scene.com","icon":"<img alt='' src='https:\/\/researchchemicalscene.files.wordpress.com\/2020\/09\/cropped-rc-scene-on-white-v2.png?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/cerauno","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Frc-scene.com%2F2020%2F08%2F01%2Flegit_rc-usa-photos-mini-review-shop-discussion%2F&signup_flow=account&domain=rc-scene.com","themeURL":"https:\/\/wordpress.com\/theme\/cerauno\/","xhrURL":"https:\/\/rc-scene.com\/wp-admin\/admin-ajax.php","nonce":"f93c162e7f","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"95e583cc2e\" \/>","referer":"https:\/\/rc-scene.com\/2020\/08\/01\/legit_rc-usa-photos-mini-review-shop-discussion\/comment-page-1\/","canFollow":"1","feedID":"105365195","statusMessage":"","customizeLink":"https:\/\/researchchemicalscene.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fresearchchemicalscene.wordpress.com%2F2020%2F08%2F01%2Flegit_rc-usa-photos-mini-review-shop-discussion%2Fcomment-page-1%2F","postID":"7547","shortlink":"https:\/\/wp.me\/pbHkTh-1XJ","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/rc-scene.com\/7547","statsLink":"https:\/\/wordpress.com\/stats\/post\/7547\/rc-scene.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Cerauno","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 108 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Frc-scene.com%2F2020%2F08%2F01%2Flegit_rc-usa-photos-mini-review-shop-discussion%2F&signup_flow=account&domain=rc-scene.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script src="https://s1.wp.com/_static/??-eJxtjOEKwjAQg1/IWhU25g/xWeYWR0t7rb07xLffDfZrCIEQ8iX+W12gKekM9tH0UbTfbufIJ2/AVEhAsvW1sGQwjwv+tLm8QoJTRjOAxK7f5chldTXpEoh9QxoFs9teD8lWz/y49pd+6G7dfYgrbYI+rQ==" type="text/javascript"></script>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link href="https://researchchemicalscene.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="../../../../../index.html" rel="canonical"/>
+<link href="https://wp.me/pbHkTh-1XJ" rel="shortlink"/>
+<link href="#" rel="alternate" type="application/json+oembed"/><link href="#" rel="alternate" type="application/xml+oembed"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="article" property="og:type"/>
+<meta content="Legit RC – Photos, Mini-Review &amp; Shop Discussion" property="og:title"/>
+<meta content="https://rc-scene.com/2020/08/01/legit_rc-usa-photos-mini-review-shop-discussion/" property="og:url"/>
+<meta content="Test Samples: Benzo Solutions Click the image to enlarge it. Clonazolam &amp; Flualprazolam solutions Part | Received 2 samples, Clonazolam and Flualprazolam solutions, each 5mg/ml. Items were pack…" property="og:description"/>
+<meta content="2020-08-01T16:01:00+00:00" property="article:published_time"/>
+<meta content="2020-11-23T22:58:16+00:00" property="article:modified_time"/>
+<meta content="RC SCENE - Safe NOT Scam! Research Chemicals" property="og:site_name"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg" property="og:image"/>
+<meta content="900" property="og:image:width"/>
+<meta content="600" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@rc_scene" name="twitter:creator"/>
+<meta content="@rc_scene" name="twitter:site"/>
+<meta content="Legit RC – Photos, Mini-Review &amp; Shop Discussion" name="twitter:text:title"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=640" name="twitter:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://www.facebook.com/WordPresscom" property="article:publisher"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="../../../../../osd.xml" rel="search" title="RC SCENE - Safe NOT Scam! Research Chemicals" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<meta content="#fcfcfc" name="theme-color"/>
+<meta content="RC SCENE - Safe NOT Scam! Research Chemicals" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Legal Aspects, Scammers, Health" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://rc-scene.com/feed/;icon-uri=https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Test Samples: Benzo Solutions Click the image to enlarge it. Clonazolam &amp; Flualprazolam solutions Part | Received 2 samples, Clonazolam and Flualprazolam solutions, each 5mg/ml. Items were packaged securely in a Mylar foil bag zip locked. Research was conducted on the Clonazolam solution first. Seems to be dosed correctly and all other properties match up…" name="description"/>
+<style type="text/css">
+			.site-title,
+		.site-description {
+			position: absolute;
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+		</style>
+<style id="custom-background-css" type="text/css">
+body.custom-background { background-color: #fcfcfc; }
+</style>
+<link href="#" rel="amphtml"/><style id="custom-colors-css" type="text/css">body,.site-description{color:#495762}.main-navigation a,.main-navigation a:visited{color:#495762}.main-navigation a:hover,.main-navigation a:focus{color:#364048}button,input[type=button],input[type=reset],input[type=submit]{color:#2e373d}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover,button:focus,input[type=button]:focus,input[type=reset]:focus,input[type=submit]:focus,button:active,input[type=button]:active,input[type=reset]:active,input[type=submit]:active{color:#2e373d}.main-navigation>div:first-of-type a,.main-navigation ul ul a,.social-links,.main-navigation ul ul,.site-info,.entry-footer,.footer-widgets,.main-navigation,.page-header,.site-content,table,.widget ul li,.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{border-color:#eee}.main-navigation>div:first-of-type a,.main-navigation ul ul a,.social-links,.main-navigation ul ul,.site-info,.entry-footer,.footer-widgets,.main-navigation,.page-header,.site-content,table,.widget ul li,.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{border-color:rgba(238,238,238,.3)}body,.main-navigation ul ul{background-color:#fcfcfc}tr:nth-of-type(2n){background-color:#f7f7f7}button,input[type=button],input[type=reset],input[type=submit]{background-color:#1abc9c}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover,button:focus,input[type=button]:focus,input[type=reset]:focus,input[type=submit]:focus,button:active,input[type=button]:active,input[type=reset]:active,input[type=submit]:active{background-color:#16a689}.social-links li a:before{color:#0a7963}.social-links li a:hover:before{color:#0a7963}.entry-footer a,.entry-footer a:visited,.entry-meta a,.entry-meta a:visited,a,a:visited{color:#0a7963}.site-main .comment-navigation a,.site-main .posts-navigation a,.site-main .post-navigation a{color:#0a7963}.site-main .comment-navigation a:visited,.site-main .posts-navigation a:visited,.site-main .post-navigation a:visited{color:#0a7963}.entry-footer{color:#0a7963}a:focus,a:hover{color:#004739}.site-main .comment-navigation,.site-main .posts-navigation,.site-main .post-navigation{color:#0a7963}h1,h2,h3,h4,h5,h6{color:#c0440b}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:#c0440b}.entry-title,.entry-title a,.entry-title a:visited{color:#c0440b}.site-title a,.site-title a:visited{color:#c0440b}</style>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=32" rel="icon" sizes="32x32"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=192" rel="icon" sizes="192x192"/>
+<link href="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=180" rel="apple-touch-icon"/>
+<meta content="https://researchchemicalscene.files.wordpress.com/2020/09/cropped-rc-scene-on-white-v2.png?w=270" name="msapplication-TileImage"/>
+<link href="https://s2.wp.com/?custom-css=1&amp;csblog=bHkTh&amp;cscache=6&amp;csrev=387" id="custom-css-css" rel="stylesheet" type="text/css"/>
+<!-- Jetpack Google Analytics -->
+<script type="text/javascript">
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', 'UA-161440209-1']);
+_gaq.push(['_trackPageview']);
+				(function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+			</script>
+<!-- End Jetpack Google Analytics -->
+</head>
+<body class="post-template-default single single-post postid-7547 single-format-standard custom-background customizer-styles-applied has-site-logo highlander-enabled highlander-light custom-colors">
+<div class="hfeed site" id="page">
+<a class="skip-link screen-reader-text" href="../../../../../index.html#content">Skip to content</a>
+<header class="site-header" id="masthead" role="banner">
+<nav class="main-navigation clear" id="site-navigation" role="navigation">
+<button aria-controls="primary-menu" aria-expanded="false" class="menu-toggle">Menu</button>
+<div class="menu-main-menu-header-container"><ul class="menu" id="primary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-15" id="menu-item-15"><a href="../../../../../index.html">&lt; Home &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-630" id="menu-item-630"><a href="../../../../../trusted-research-chemical-shops/index.html">&lt; Research Chemical Vendors &gt;</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3918" id="menu-item-3918"><a href="../../../../../trusted-research-chemical-shops/index.html">Trusted Research Chemical Vendors * EUROPE</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3917" id="menu-item-3917"><a href="../../../../../trusted-research-chemical-vendors-asia/index.html">Trusted Research Chemical Vendors * ASIA</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3915" id="menu-item-3915"><a href="../../../../../trusted-research-chemical-vendors-usa/index.html">Trusted Research Chemical Vendors * USA</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3916" id="menu-item-3916"><a href="../../../../../trusted-research-chemical-vendors-canada/index.html">Trusted Research Chemical Vendors * CANADA</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-2091" id="menu-item-2091"><a href="../../../../../category/trusted-shop-reviews/index.html">&lt; Shop Reviews &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-14" id="menu-item-14"><a href="../../../../../blog-feed/index.html">&lt; All Articles &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7067" id="menu-item-7067"><a href="../../../../../news/index.html">&lt;  NEWS &gt;</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-486" id="menu-item-486"><a href="../../../../../contact/index.html">&lt; Contact &gt;</a></li>
+</ul></div>
+</nav><!-- #site-navigation -->
+<div class="site-branding">
+<a class="site-logo-link" href="../../../../../index.html" itemprop="url" rel="home"><img alt="RC SCENE - Safe NOT Scam : Logo" class="site-logo attachment-cerauno-site-logo" data-attachment-id="9050" data-comments-opened="1" data-image-description="&lt;p&gt;rc-scene, rc scene, logo, header , 180&lt;/p&gt;
+" data-image-meta='{"aperture":"0","credit":"K\u00d8MPR\u00d8M\u00c6T","camera":"","caption":"","created_timestamp":"0","copyright":"\u00a9 rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"RC SCENE - Safe NOT Scam! - Research Chemicals Info Page - Logo","orientation":"0"}' data-image-title="RC SCENE – Safe NOT Scam! – Research Chemicals Info Page – Logo" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg" data-orig-size="180,131" data-permalink="https://rc-scene.com/rc-scene-safe-not-scam-research-chemicals-info-page-logo/" data-size="cerauno-site-logo" height="131" itemprop="logo" loading="lazy" sizes="(max-width: 180px) 100vw, 180px" src="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=180" srcset="https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg 180w, https://researchchemicalscene.files.wordpress.com/2020/11/rc-scene-research-chemicals-logo-header-180.png.jpg?w=150 150w" width="180"/></a> <h1 class="site-title"><a href="../../../../../index.html" rel="home">RC SCENE – Safe NOT Scam! Research Chemicals</a></h1>
+<h2 class="site-description">Research Chemicals, NPS, Trusted Shops, Vendors List, Trusted Shop Reviews with Photos, Legal Aspects, Scammers, Health</h2>
+</div><!-- .site-branding -->
+</header><!-- #masthead -->
+<div class="site-content" id="content">
+<div class="featured-header-image">
+<a href="../../../../../index.html" rel="home">
+<img alt="" class="attachment-cerauno-header size-cerauno-header wp-post-image" data-attachment-id="7902" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"K\u00d8MPR\u00d8M\u00c6T","camera":"","caption":"","created_timestamp":"0","copyright":"rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"Legit RC Benzo solutions Clonazolam and Flualprazolam","orientation":"0"}' data-image-title="Legit RC Benzo solutions Clonazolam and Flualprazolam" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=900" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=600" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg" data-orig-size="1200,800" data-permalink="https://rc-scene.com/legit-rc-benzo-solutions-clonazolam-and-flualprazolam/" height="400" loading="lazy" sizes="(max-width: 1200px) 100vw, 1200px" src="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=1200&amp;h=400&amp;crop=1" srcset="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=1200&amp;h=400&amp;crop=1 1200w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=150&amp;h=50&amp;crop=1 150w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=625&amp;h=208&amp;crop=1 625w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=768&amp;h=256&amp;crop=1 768w" width="1200"/> </a>
+</div><!-- .featured-header-image -->
+<div class="content-area" id="primary">
+<main class="site-main" id="main" role="main">
+<article class="post-7547 post type-post status-publish format-standard has-post-thumbnail hentry category-rc-vendors category-ships-to-the-us category-ships-to-the-usa category-trusted-rc-vendors category-trusted-rc-vendors-link-list category-usa category-usa-domestic category-vendors-samples-photos tag-mini-review tag-photos tag-product-samples tag-safe-not-scam tag-shop-experience tag-shop-discussion tag-trusted-vendor" id="post-7547">
+<header class="entry-header">
+<h1 class="entry-title">Legit RC – Photos, Mini-Review &amp; Shop Discussion</h1> </header><!-- .entry-header -->
+<div class="entry-content">
+<h3 class="has-black-color has-text-color">Test Samples: Benzo Solutions</h3>
+<div class="wp-block-group alignfull"><div class="wp-block-group__inner-container">
+<p class="has-small-font-size"><em><strong>Click the image to enlarge it.</strong></em></p>
+<div class="wp-block-coblocks-gallery-stacked alignfull has-lightbox"><ul class="coblocks-gallery has-border-radius-10 has-fullwidth-images has-margin"><li class="coblocks-gallery--item"><figure class="coblocks-gallery--figure has-margin-bottom-50"><img alt="" class="wp-image-7903 has-shadow-none" data-attachment-id="7903" data-comments-opened="1" data-id="7903" data-image-description="" data-image-meta='{"aperture":"0","credit":"K\u00d8MPR\u00d8M\u00c6T","camera":"","caption":"","created_timestamp":"0","copyright":"rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"Legit RC Benzo solutions Clonazolam and Flualprazolam","orientation":"0"}' data-image-title="Legit RC Benzo solutions Clonazolam and Flualprazolam" data-imglink="" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=900" data-link="https://rc-scene.com/legit-rc-benzo-solutions-clonazolam-and-flualprazolam-2/" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=600" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg" data-orig-size="1200,800" data-permalink="https://rc-scene.com/legit-rc-benzo-solutions-clonazolam-and-flualprazolam-2/" sizes="(max-width: 1050px) 100vw, 1050px" src="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=1050" srcset="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=1050 1050w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=150 150w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=600 600w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg?w=768 768w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-clonazolam-and-flualparzolam-solutions.jpg 1200w"/><figcaption class="coblocks-gallery--caption">Clonazolam &amp; Flualprazolam solutions</figcaption></figure></li></ul></div>
+<p>Part |</p>
+</div></div>
+<p><strong>Received 2 samples, Clonazolam and  Flualprazolam solutions, each 5mg/ml. </strong></p>
+<p>Items were packaged securely in a Mylar foil bag zip locked. </p>
+<p>Research was conducted on the <strong>Clonazolam </strong>solution first. Seems to be dosed correctly and all other properties match up from what past research has shown on this compound. Test subject dosed .2ml of the Clonazolam solution. Effects were evident at the 20-25 minute mark. Slight reduction in anxiety, muscles loosened, racing thoughts become less. </p>
+<p><strong>Quality would be ranked at a 8.5/10. Very impressed. </strong></p>
+<p>Tomorrow, I’ll be conducting research on the Flualprazolam solution to give a thorough and detailed review.</p>
+<p class="has-small-font-size"><em>( Source: </em><br/><em><a href="../../../../../trusted-research-chemical-vendors-usa/comment-page-11/index.html" rel="noreferrer noopener" target="_blank">rc-scene.com/trusted-research-chemical-vendors-usa/#comment-1895</a> )</em></p>
+<div class="wp-block-group alignfull"><div class="wp-block-group__inner-container">
+<p class="has-small-font-size"><em><strong>Click the image to enlarge it.</strong></em></p>
+<div class="wp-block-coblocks-gallery-stacked alignfull has-lightbox"><ul class="coblocks-gallery has-border-radius-10 has-fullwidth-images has-margin"><li class="coblocks-gallery--item"><figure class="coblocks-gallery--figure has-margin-bottom-50"><img alt="" class="wp-image-7910 has-shadow-none" data-attachment-id="7910" data-comments-opened="1" data-id="7910" data-image-description="" data-image-meta='{"aperture":"0","credit":"K\u00d8MPR\u00d8M\u00c6T","camera":"","caption":"","created_timestamp":"0","copyright":"rc-scene.com (K\u00d8MPR\u00d8M\u00c6T)","focal_length":"0","iso":"0","shutter_speed":"0","title":"Legit_RC Benzo solutions Promo Foto","orientation":"0"}' data-image-title="Legit_RC Benzo solutions Promo Foto" data-imglink="" data-large-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=900" data-link="https://rc-scene.com/legit_rc-benzo-solutions-promo-foto/" data-medium-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=600" data-orig-file="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg" data-orig-size="1200,800" data-permalink="https://rc-scene.com/legit_rc-benzo-solutions-promo-foto/" sizes="(max-width: 1050px) 100vw, 1050px" src="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=1050" srcset="https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=1050 1050w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=150 150w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=600 600w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg?w=768 768w, https://researchchemicalscene.files.wordpress.com/2020/09/legit_rc-benzo-solutions-promo-photo.jpg 1200w"/><figcaption class="coblocks-gallery--caption">Legit_RC official promotional photo</figcaption></figure></li></ul></div>
+</div></div>
+<p>Part //</p>
+<p>The <strong>Flualprazolam from Legit RC was a 8/10 for quality as well</strong>. Would order in the future. </p>
+<p>– T.</p>
+<p class="has-small-font-size">(source: <br/><a href="../../../../../trusted-research-chemical-vendors-usa/comment-page-11/index.html" rel="noreferrer noopener" target="_blank">https://rc-scene.com/trusted-research-chemical-vendors-usa/#comment-1927</a>)</p>
+<p class="has-text-align-center has-background" style="background-color:#efefef;"><span class="has-inline-color has-vivid-red-color"><strong>Find Legit RC:<br/></strong></span><a href="../../../../../trusted-research-chemical-vendors-usa/index.html">Legit RC Shop Description &amp; Links</a></p>
+<hr class="wp-block-separator has-text-color has-background has-cyan-bluish-gray-background-color has-cyan-bluish-gray-color is-style-dots"/>
+<div class="sharedaddy sd-sharing-enabled" id="jp-post-flair"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this page or photo</h3><div class="sd-content"><ul><li class="share-twitter"><a class="share-twitter sd-button share-icon no-text" data-shared="sharing-twitter-7547" href="../../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-facebook"><a class="share-facebook sd-button share-icon no-text" data-shared="sharing-facebook-7547" href="../../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Facebook"><span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)</span></a></li><li class="share-jetpack-whatsapp"><a class="share-jetpack-whatsapp sd-button share-icon no-text" data-shared="" href="../../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on WhatsApp"><span></span><span class="sharing-screen-reader-text">Click to share on WhatsApp (Opens in new window)</span></a></li><li class="share-telegram"><a class="share-telegram sd-button share-icon no-text" data-shared="" href="../../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Telegram"><span></span><span class="sharing-screen-reader-text">Click to share on Telegram (Opens in new window)</span></a></li><li class="share-pinterest"><a class="share-pinterest sd-button share-icon no-text" data-shared="sharing-pinterest-7547" href="../../../../../index.html" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Pinterest"><span></span><span class="sharing-screen-reader-text">Click to share on Pinterest (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div>
+<div class="jp-relatedposts" id="jp-relatedposts">
+<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div> </div><!-- .entry-content -->
+<footer class="entry-footer clear">
+<div class="entry-footer-wrapper"><span class="posted-on"><a href="../../../../../index.html" rel="bookmark"><time class="entry-date published" datetime="2020-08-01T09:01:00-07:00">August 1, 2020</time><time class="updated" datetime="2020-11-23T14:58:16-08:00">November 23, 2020</time></a></span><span class="byline"> <span class="author vcard"><a class="url fn n" href="../../../../../author/6r2374vpezp1qfj278yyaq/index.html">Trusted RC Shops</a></span></span><span class="cat-links"><a href="../../../../../category/rc-vendors/index.html" rel="category tag">RC Vendors</a>, <a href="../../../../../category/ships-to-the-us/index.html" rel="category tag">Ships to the US</a>, <a href="../../../../../category/trusted-shop-reviews/ships-to-the-usa/index.html" rel="category tag">Ships to the USA</a>, <a href="../../../../../category/trusted-rc-vendors/index.html" rel="category tag">Trusted RC Vendors</a>, <a href="../../../../../category/trusted-rc-vendors-link-list/index.html" rel="category tag">Trusted RC vendors link list</a>, <a href="../../../../../category/trusted-shop-reviews/USA/index.html" rel="category tag">USA</a>, <a href="../../../../../category/usa-domestic/index.html" rel="category tag">USA (domestic)</a>, <a href="../../../../../category/vendors-samples-photos/index.html" rel="category tag">Vendors Samples Photos</a></span><span class="tags-links"><a href="../../../../../tag/mini-review/index.html" rel="tag">Mini-Review</a>, <a href="../../../../../tag/photos/index.html" rel="tag">Photos</a>, <a href="../../../../../tag/product-samples/index.html" rel="tag">Product Samples</a>, <a href="../../../../../tag/safe-not-scam/index.html" rel="tag">Safe NOT Scam</a>, <a href="../../../../../tag/shop-experience/index.html" rel="tag">Shop Experience</a>, <a href="../../../../../tag/shop-discussion/index.html" rel="tag">SHop-Discussion</a>, <a href="../../../../../tag/trusted-vendor/index.html" rel="tag">Trusted Vendor</a></span></div><!--.entry-footer-wrapper--> </footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+<div class="comments-area" id="comments">
+<h2 class="comments-title">
+			22 thoughts on “<span>Legit RC – Photos, Mini-Review &amp; Shop Discussion</span>”		</h2>
+<ol class="comment-list">
+<li class="comment even thread-even depth-1 parent highlander-comment" id="comment-2600">
+<article class="comment-body" id="div-comment-2600">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/65767fcfdf032783efa707674533f7cf?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">JC</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-25T13:55:18-08:00">
+								November 25, 2020 at 13:55							</time>
+</a>
+<span class="reply"><a aria-label="Reply to JC" class="comment-reply-link" data-belowelement="div-comment-2600" data-commentid="2600" data-postid="7547" data-replyto="Reply to JC" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>I just wanted to follow up on my earlier comments and say that vendor has been in contact after being drummed with orders and unnecessary emails, and everything is on track.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2600"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2600">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment byuser comment-author-6r2374vpezp1qfj278yyaq bypostauthor odd alt depth-2 highlander-comment" id="comment-2606">
+<article class="comment-body" id="div-comment-2606">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/9727f0a7a4583947da8e30d951049d03?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn"><a class="url" href="https://research-chemicals.online/" rel="external nofollow ugc">Trusted RC Shops</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-26T01:40:28-08:00">
+								November 26, 2020 at 01:40							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Trusted RC Shops" class="comment-reply-link" data-belowelement="div-comment-2606" data-commentid="2606" data-postid="7547" data-replyto="Reply to Trusted RC Shops" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Thank you!</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2606"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2606">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 parent highlander-comment" id="comment-2586">
+<article class="comment-body" id="div-comment-2586">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/d68cc1768ca5287ab6e81e8235c7c01d?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">KaneD</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-24T07:30:25-08:00">
+								November 24, 2020 at 07:30							</time>
+</a>
+<span class="reply"><a aria-label="Reply to KaneD" class="comment-reply-link" data-belowelement="div-comment-2586" data-commentid="2586" data-postid="7547" data-replyto="Reply to KaneD" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>He will deliver had same anxiety you did It’ll come</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2586"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2586">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment odd alt depth-2 parent highlander-comment" id="comment-2588">
+<article class="comment-body" id="div-comment-2588">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/65767fcfdf032783efa707674533f7cf?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">JC</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-24T09:42:23-08:00">
+								November 24, 2020 at 09:42							</time>
+</a>
+<span class="reply"><a aria-label="Reply to JC" class="comment-reply-link" data-belowelement="div-comment-2588" data-commentid="2588" data-postid="7547" data-replyto="Reply to JC" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Did it just show up without word from vendor?</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2588"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2588">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment even depth-3 highlander-comment" id="comment-2589">
+<article class="comment-body" id="div-comment-2589">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/4da1ba630132f85c7e6726b7347c8153?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">KaneD</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-24T09:54:58-08:00">
+								November 24, 2020 at 09:54							</time>
+</a>
+<span class="reply"><a aria-label="Reply to KaneD" class="comment-reply-link" data-belowelement="div-comment-2589" data-commentid="2589" data-postid="7547" data-replyto="Reply to KaneD" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Yep</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2589"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2589">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 parent highlander-comment" id="comment-2579">
+<article class="comment-body" id="div-comment-2579">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/65767fcfdf032783efa707674533f7cf?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">JC</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-23T19:51:29-08:00">
+								November 23, 2020 at 19:51							</time>
+</a>
+<span class="reply"><a aria-label="Reply to JC" class="comment-reply-link" data-belowelement="div-comment-2579" data-commentid="2579" data-postid="7547" data-replyto="Reply to JC" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Folks talking about getting orders within three days and it’s been two days for me without any acknowledgement of receiving payment/order.  I hate to beat a dead horse but when this is your very first order with a new vendor it don’t exactly add up to a reassuring or pleasant feeling to say the least.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2579"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2579">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment byuser comment-author-6r2374vpezp1qfj278yyaq bypostauthor even depth-2 highlander-comment" id="comment-2604">
+<article class="comment-body" id="div-comment-2604">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/9727f0a7a4583947da8e30d951049d03?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn"><a class="url" href="https://research-chemicals.online/" rel="external nofollow ugc">Trusted RC Shops</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-26T00:31:07-08:00">
+								November 26, 2020 at 00:31							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Trusted RC Shops" class="comment-reply-link" data-belowelement="div-comment-2604" data-commentid="2604" data-postid="7547" data-replyto="Reply to Trusted RC Shops" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>They had recently gotten scammed by a wholesaler (sold them fake products) and probably decided skip the email part since they have quite a backlog of open orders.</p>
+<p>I, by the way, opened a support ticket with another shop a month ago and still have not heard back from them, seems to be a bad habit spreading…</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2604"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2604">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2578">
+<article class="comment-body" id="div-comment-2578">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/65767fcfdf032783efa707674533f7cf?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">JC</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-23T14:49:27-08:00">
+								November 23, 2020 at 14:49							</time>
+</a>
+<span class="reply"><a aria-label="Reply to JC" class="comment-reply-link" data-belowelement="div-comment-2578" data-commentid="2578" data-postid="7547" data-replyto="Reply to JC" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>I sent the guy a form of payment and can’t get a response.  I mean come on, how hard is it to confirm receipt of payment and order.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2578"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2578">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="comment-2511">
+<article class="comment-body" id="div-comment-2511">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/d68cc1768ca5287ab6e81e8235c7c01d?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">KaneD</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-18T22:32:01-08:00">
+								November 18, 2020 at 22:32							</time>
+</a>
+<span class="reply"><a aria-label="Reply to KaneD" class="comment-reply-link" data-belowelement="div-comment-2511" data-commentid="2511" data-postid="7547" data-replyto="Reply to KaneD" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Does anyone know if he provides tracking I made an order yesterday and was having trouble sending transaction because I’m new to bitcoin and haven’t heard from them since. I don’t want to bug them because I know they are very busy so any input would be helpful. Thank you.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2511"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2511">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-0nexusninja0 odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2398">
+<article class="comment-body" id="div-comment-2398">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://2.gravatar.com/avatar/e86e64939714fc6f8b26748be6b582f6?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Xmode</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-09T08:32:17-08:00">
+								November 9, 2020 at 08:32							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Xmode" class="comment-reply-link" data-belowelement="div-comment-2398" data-commentid="2398" data-postid="7547" data-replyto="Reply to Xmode" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Tested with the Pyrazolam, a superior specimen exceeds any other vendor quality I’ve found yet. 3 days to my door due to weekend.<br/>
+Vendor is fair, honest, &amp; kind.<br/>
+Repeat customer for life<br/>
+Xm</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2398"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2398">Liked by <a class="view-likers" data-like-count="2" href="../../../../../index.html">2 people</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-0nexusninja0 even thread-even depth-1 highlander-comment" id="comment-2356">
+<article class="comment-body" id="div-comment-2356">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://2.gravatar.com/avatar/e86e64939714fc6f8b26748be6b582f6?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Xmode</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-03T23:07:36-08:00">
+								November 3, 2020 at 23:07							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Xmode" class="comment-reply-link" data-belowelement="div-comment-2356" data-commentid="2356" data-postid="7547" data-replyto="Reply to Xmode" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Best seller around hands down.<br/>
+Top quality goods, fast shipping, honest pricing.<br/>
+Why take chances elsewhere when this seller is a sure bet?<br/>
+10/10 repeat customer</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2356"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2356">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2266">
+<article class="comment-body" id="div-comment-2266">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/76b3717fad8808cfa6a6c720c1f6916b?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Aqua</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-22T11:56:17-07:00">
+								October 22, 2020 at 11:56							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Aqua" class="comment-reply-link" data-belowelement="div-comment-2266" data-commentid="2266" data-postid="7547" data-replyto="Reply to Aqua" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Vendor is GREAT!  Good prices, and keeps in touch.  I was impressed with their terms of service.  If this vendor makes a mistake, they WILL make it right.</p>
+<p>I’m glad I gave them a try because they are very trustworthy</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2266"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2266">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="comment-2259">
+<article class="comment-body" id="div-comment-2259">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/7332465392d1822da528f59965b5e772?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn"><a class="url" href="http://Legit%20RC" rel="external nofollow ugc">Ryan Owens</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-21T18:04:12-07:00">
+								October 21, 2020 at 18:04							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Ryan Owens" class="comment-reply-link" data-belowelement="div-comment-2259" data-commentid="2259" data-postid="7547" data-replyto="Reply to Ryan Owens" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Legit RC is the best company I have dealt with and won’t even bother with anyone else he has fast shipping good selection and everything is as advertised. He also takes multiple forms of payment and is just an honest dude he won’t scam and is always willing to work with you. We had one small shipping issue but he mad up for it and was very sincere. I love this guy and legit RC If ur looking for rcs this is the place</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2259"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2259">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment" id="comment-2069">
+<article class="comment-body" id="div-comment-2069">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/c9cc8d5fd8964048e128a4ef6bb8ff78?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Gary LaFollette</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-05T06:31:02-07:00">
+								October 5, 2020 at 06:31							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Gary LaFollette" class="comment-reply-link" data-belowelement="div-comment-2069" data-commentid="2069" data-postid="7547" data-replyto="Reply to Gary LaFollette" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Flualprazolam Solution 6ml/30mg<br/>
+Packaging was professional in zipped Mylar bag, plastic dropper bottle. Note: no stealth used.<br/>
+Quality of product is unmatched by any other vendors I’ve tried. Solutions are Everclear based so no bacterial concerns.<br/>
+1st research trial was a complete, perfect experience. Highly effective!<br/>
+Ships orders FAST &amp; Customer Service is excellent with this vendor. He went above &amp; beyond to help me. Can’t recommend highly enough. Ordering again soon!<br/>
+Rating: 5/5 Stars<br/>
+Xmode</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2069"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2069">Liked by <a class="view-likers" data-like-count="2" href="../../../../../index.html">2 people</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment even depth-2 highlander-comment" id="comment-2258">
+<article class="comment-body" id="div-comment-2258">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/7332465392d1822da528f59965b5e772?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Ryan Owens</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-21T17:57:07-07:00">
+								October 21, 2020 at 17:57							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Ryan Owens" class="comment-reply-link" data-belowelement="div-comment-2258" data-commentid="2258" data-postid="7547" data-replyto="Reply to Ryan Owens" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>I’ve placed an order with this guy and I will say he is as real as the come will never scam and always gets your order shipped. I had a small issue with shipping and he hooked me up on my next order Im waiting to get now. All chemicals I have had are definitely as advertised on bottle. By far this guy is the to go to he will work with you and you’ll never get screwed. There’s a reason it’s called Legit RC</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2258"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2258">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-6r2374vpezp1qfj278yyaq bypostauthor odd alt thread-even depth-1 highlander-comment" id="comment-2047">
+<article class="comment-body" id="div-comment-2047">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/9727f0a7a4583947da8e30d951049d03?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn"><a class="url" href="https://research-chemicals.online/" rel="external nofollow ugc">Trusted RC Shops</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-03T06:24:39-07:00">
+								October 3, 2020 at 06:24							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Trusted RC Shops" class="comment-reply-link" data-belowelement="div-comment-2047" data-commentid="2047" data-postid="7547" data-replyto="Reply to Trusted RC Shops" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<blockquote>
+<blockquote><p>
+    DO NOT DESCRIBE SUBSTANCE EFFECTS</p>
+<p>    DO NOT COMPARE RCs TO ANY MEDS OR SCHEDULED DRUGS</p>
+<p>    AVOID PHRASES LIKE “CONDUCTING RESEARCH”. No one cares if the bottle fitted into your exit.
+  </p></blockquote>
+</blockquote>
+<p>Thank you!</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2047"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2047">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 parent highlander-comment" id="comment-2038">
+<article class="comment-body" id="div-comment-2038">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://2.gravatar.com/avatar/baafda7c01c7d806aec97ceb6370a76d?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Micah</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-10-02T15:54:18-07:00">
+								October 2, 2020 at 15:54							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Micah" class="comment-reply-link" data-belowelement="div-comment-2038" data-commentid="2038" data-postid="7547" data-replyto="Reply to Micah" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>I once again ordered from Legit RC’s and they delivered. I got one 6ml of flualprazolam and one 3ml of diclazepam.</p>
+<p>[Edit, K.] Review of flualp. Interesting chemical indeed and definitely potent. Not watered down like with absolute chems.</p>
+<p>[Edit K.] Diclazepam: I just wish the diclaz was a little stronger or cheaper.</p>
+<p>[Edit K.] I LOVE THIS COMPANY and will ALWAYS stick by them. They are tried and true. Always treats me right.  Thank you legit rcs!</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2038"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2038">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment odd alt depth-2 parent highlander-comment" id="comment-2479">
+<article class="comment-body" id="div-comment-2479">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://1.gravatar.com/avatar/7aeb10ec4d0b6df9b0521027979a6b4c?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Rockberger</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-17T02:39:47-08:00">
+								November 17, 2020 at 02:39							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Rockberger" class="comment-reply-link" data-belowelement="div-comment-2479" data-commentid="2479" data-postid="7547" data-replyto="Reply to Rockberger" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>What do you write down when asked what your going to use on the product for cuz I said on my lab rats (due to my previous experience with peptides)  and they denied me!  Do I need to say I’m a chemist using them on my lab plants?</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2479"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2479">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment byuser comment-author-6r2374vpezp1qfj278yyaq bypostauthor even depth-3 highlander-comment" id="comment-2481">
+<article class="comment-body" id="div-comment-2481">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://0.gravatar.com/avatar/9727f0a7a4583947da8e30d951049d03?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn"><a class="url" href="https://research-chemicals.online/" rel="external nofollow ugc">Trusted RC Shops</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-11-17T05:54:01-08:00">
+								November 17, 2020 at 05:54							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Trusted RC Shops" class="comment-reply-link" data-belowelement="div-comment-2481" data-commentid="2481" data-postid="7547" data-replyto="Reply to Trusted RC Shops" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>No animals. No humans. No plants. Find a technical term on how to inspect chems, how to test how they react when mixed with other chems, sthg. like that.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-2481"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-2481">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 parent highlander-comment" id="comment-1945">
+<article class="comment-body" id="div-comment-1945">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://2.gravatar.com/avatar/baafda7c01c7d806aec97ceb6370a76d?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">Micah Leightner</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-09-25T20:17:14-07:00">
+								September 25, 2020 at 20:17							</time>
+</a>
+<span class="reply"><a aria-label="Reply to Micah Leightner" class="comment-reply-link" data-belowelement="div-comment-1945" data-commentid="1945" data-postid="7547" data-replyto="Reply to Micah Leightner" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Legit RC’s is seriously one of the BEST companies to work with. Amazing customer service, worked with me even when I was difficult! FAST shipping, ON POINT products. There research chemicals are of high potency and are very pure. God knows what website I’d be getting scammed on AGAIN if it wasnt for legit RC’S Fr. I was so tired of these sketchy ass websites I thank God I found this domestic vendor. He is the BEST. Just give them a try. (Competitive pricing too)</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-1945"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-1945">Liked by <a class="view-likers" data-like-count="1" href="../../../../../index.html">1 person</a></span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+<ol class="children">
+<li class="comment even depth-2 highlander-comment" id="comment-1953">
+<article class="comment-body" id="div-comment-1953">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://i1.wp.com/pbs.twimg.com/profile_images/1250929315115606017/_oIJ5e6t_normal.png?resize=70%2C70" width="70"/> <b class="fn"><a class="url" href="http://twitter.com/rc_scene" rel="external nofollow ugc">KØMPRØMÆT :: Research Chemicals (@rc_scene)</a></b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-09-26T13:29:16-07:00">
+								September 26, 2020 at 13:29							</time>
+</a>
+<span class="reply"><a aria-label="Reply to KØMPRØMÆT :: Research Chemicals (@rc_scene)" class="comment-reply-link" data-belowelement="div-comment-1953" data-commentid="1953" data-postid="7547" data-replyto="Reply to KØMPRØMÆT :: Research Chemicals (@rc_scene)" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Competitive prices, are you sure about that?</p>
+<p>Mr Super Secret refuses to provide us with a price list, reminds me of Superwoman who left a fake number when getting up and leaving early. I never got the chance to ask where and what I should improve. Forget that again.</p>
+<p>Would you happen to know his prices for solutions and 2-fdck? To me, “competitive” sounds like “quite expensive”, tbh…</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-1953"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-1953">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-1913">
+<article class="comment-body" id="div-comment-1913">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-70" height="70" src="https://2.gravatar.com/avatar/53fe86ca6dc26c9de8abb6feddd8be17?s=70&amp;d=identicon&amp;r=R" width="70"/> <b class="fn">ThanksForTheDance</b> </div><!-- .comment-author -->
+<div class="comment-metadata">
+<a href="../../../../../index.html">
+<time datetime="2020-09-24T04:10:01-07:00">
+								September 24, 2020 at 04:10							</time>
+</a>
+<span class="reply"><a aria-label="Reply to ThanksForTheDance" class="comment-reply-link" data-belowelement="div-comment-1913" data-commentid="1913" data-postid="7547" data-replyto="Reply to ThanksForTheDance" data-respondelement="respond" href="../../../../../index.html" rel="nofollow">Reply</a></span> </div><!-- .comment-metadata -->
+</footer><!-- .comment-meta -->
+<div class="comment-content">
+<p>Very kind &amp; understanding to deal with. Spares no expense getting package to you – 1 day in my case.  I got a junk batch of fluaz from a Calm company and am hesitant to try another.  I don’t have an Instagram account and have never received any free samples. I’m wondering if I made another purchase if the company would provide me a discount just for analyzing their fluaz solution.</p>
+<p>Pros: customer service.<br/>
+5 / 1 allows a convenient chap-stick size dispenser without the risk of extracting too much from the bottle.  Can be placed in gel-caps which simulation testing allow the substance to fully enter the abdominal cavity.  Anecdotal evidence suggests this may reduce over stimulated damaged nerves – abdominal pain, may induce a healthy bowel movement &amp; may not be as taxing on the body as Linzess which can find you on the toilet for up to a day and a half days.</p>
+<p>Cons: Immediately wanted a cigarette.  I don’t smoke.  But smoking and all things alcohol are like chocolate &amp; peanut butter.  Capsules help negate this.  I don’t know if it was psychosomatic or if if it is just the rate at which my body burns through anything alcohol related but the half life seamed slightly shorter than that of other clonaz in other solutions.  Again this is not confirmed (I suspect it’s more biological then chemical) but the trade-off of placing the drops in the capsules and being able to stand up without debilitating stomach pain is a fair trade even if this were the case.</p>
+<p>Final Con:  Plenty potent enough for all. A 10/1 or even 20/1 option would be ideal for me.  I am the exception to the rule however.  This all began when all the medical professionals wanted to keep me sick for a long line of very unpleasant and expensive test, most of which are unnecessary then SARS-CoV-2 made the world stop and it was just me and my untenable existence  Once you get past the self-defeatism you dust off your boots.  I have a team of advocates in &amp; outside the medical world working on finding the right doctor(s) whom may improve my quality of life for what time I have left.  Let us hope they are soon successful.  In the meantime, thanks for sunrises.</p>
+<p class="comment-likes comment-not-liked" data-liked="comment-not-liked" id="comment-like-1913"><a class="comment-like-link needs-login" data-blog="172868107" href="../../../../../index.html" rel="nofollow"><span>Like</span></a><span class="comment-like-feedback" id="comment-like-count-1913">Like</span></p>
+</div><!-- .comment-content -->
+</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .comment-list -->
+<div class="comment-respond" id="respond">
+<h3 class="comment-reply-title" id="reply-title">Leave a Reply <small><a href="../../../../../index.html#respond" id="cancel-comment-reply-link" rel="nofollow" style="display:none;">Cancel reply</a></small></h3><form action="https://rc-scene.com/wp-comments-post.php" class="comment-form" id="commentform" method="post" novalidate=""><input id="highlander_comment_nonce" name="highlander_comment_nonce" type="hidden" value="225e65a381"/><input name="_wp_http_referer" type="hidden" value="/2020/08/01/legit_rc-usa-photos-mini-review-shop-discussion/comment-page-1/"/>
+<input id="hc_post_as" name="hc_post_as" type="hidden" value="guest"/>
+<div class="comment-form-field comment-textarea">
+<label for="comment">Enter your comment here...</label>
+<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+<div id="comment-form-identity">
+<div id="comment-form-nascar">
+<p>Fill in your details below or click an icon to log in:</p>
+<ul>
+<li class="selected" style="display:none;">
+<a class="nascar-signin-link" href="../../../../../index.html#comment-form-guest" id="postas-guest" title="Login via Guest">
+</a>
+</li>
+<li>
+<a class="nascar-signin-link" href="../../../../../index.html#comment-form-load-service:WordPress.com" id="postas-wordpress" title="Login via WordPress.com">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#0087be"></path></g></svg> </a>
+</li>
+<li>
+<a class="nascar-signin-link" href="../../../../../index.html#comment-form-load-service:Twitter" id="postas-twitter" title="Login via Twitter">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#1DA1F2"></path></g></svg> </a>
+</li>
+<li>
+<a class="nascar-signin-link" href="../../../../../index.html#comment-form-load-service:Facebook" id="postas-facebook" title="Login via Facebook">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#3B5998"></path></g></svg> </a>
+</li>
+</ul>
+</div>
+<div class="comment-form-service selected" id="comment-form-guest">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank"> <img alt="Gravatar" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</a> </div>
+<div class="comment-form-fields">
+<div class="comment-form-field comment-form-email">
+<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+<div class="comment-form-input"><input id="email" name="email" type="email" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-author">
+<label for="author">Name <span class="required">(required)</span></label>
+<div class="comment-form-input"><input id="author" name="author" type="text" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-url">
+<label for="url">Website</label>
+<div class="comment-form-input"><input id="url" name="url" type="url" value=""/></div>
+</div>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-wordpress">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="WordPress.com Logo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-wordpress" id="wordpress-avatar" name="wp_avatar" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-user_id" name="wp_user_id" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-access_token" name="wp_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-wordpress">
+<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log Out</a> / 
+				<a href="../../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#0087be"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-googleplus">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Google photo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-googleplus" id="googleplus-avatar" name="googleplus_avatar" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-user_id" name="googleplus_user_id" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-access_token" name="googleplus_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-googleplus">
+<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log Out</a> / 
+				<a href="../../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 60 60" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" fill="#519bf7"></path><path d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" fill="#3db366"></path><path d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" fill="#fdc600"></path><path d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" fill="#f15b44"></path></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-twitter">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Twitter picture" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-twitter" id="twitter-avatar" name="twitter_avatar" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-user_id" name="twitter_user_id" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-access_token" name="twitter_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-twitter">
+<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log Out</a> / 
+				<a href="../../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#1DA1F2"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-facebook">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Facebook photo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=R" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-facebook" id="facebook-avatar" name="fb_avatar" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-user_id" name="fb_user_id" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-access_token" name="fb_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-facebook">
+<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log Out</a> / 
+				<a href="../../../../../index.html" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#3B5998"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-load-service">
+<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+<p>Connecting to %s</p>
+</div>
+</div>
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+<div id="comment-form-subscribe">
+<p class="comment-subscription-form"><input id="subscribe" name="subscribe" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe" id="subscribe-label" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input id="subscribe_blog" name="subscribe_blog" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe_blog" id="subscribe-blog-label" style="display: inline;">Notify me of new posts via email.</label></p></div>
+<p class="form-submit"><input class="submit" id="comment-submit" name="submit" type="submit" value="Post Comment"/> <input id="comment_post_ID" name="comment_post_ID" type="hidden" value="7547"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="0"/>
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" type="hidden" value="b0f1c17609"/></p>
+<input name="genseq" type="hidden" value="1607192233"/>
+<input id="ak_js" name="ak_js" type="hidden" value="14"/><textarea cols="45" maxlength="100" name="ak_hp_textarea" rows="8" style="display: none !important;"></textarea></form> </div><!-- #respond -->
+<div style="clear: both"></div>
+</div><!-- #comments -->
+<nav aria-label="Posts" class="navigation post-navigation" role="navigation">
+<h2 class="screen-reader-text">Post navigation</h2>
+<div class="nav-links"><div class="nav-previous"><a href="#" rel="prev"><span class="meta-nav">Previous Post</span> Report scammers to police!</a></div><div class="nav-next"><a href="../../../../../news-gossip-who-will-propose-banning-of-13-more-substances-including-3-meo-pcp-and-diclazepam-ilegal-german-sourcing-forum-headspace-v2-open-for-registration-polish-dopek-forum-not-a-safe-bet-anymo/index.html" rel="next"><span class="meta-nav">Next Post</span> WHO to propose banning of 13 more substances, including 3-Meo-PCP and Diclazepam ++ German forum headspace v2 open for registration ++ Polish Dopek forum not a safe bet anymore</a></div></div>
+</nav>
+</main><!-- #main -->
+</div><!-- #primary -->
+<div class="widget-area sidebar-left" id="secondary" role="complementary">
+<aside class="widget widget_google_translate_widget" id="google_translate_widget-3"><h1 class="widget-title">Translate this page</h1><div id="google_translate_element"></div></aside><aside class="widget widget_links" id="linkcat-703963384"><h1 class="widget-title">Your 2 Cents</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../../../../news/index.html" title="The money will be used to cover basic expenses like web hosting, PlugIns, Software Licenses, etc. – Rest assured that no one will ever make profit with the site!">THANK YOU so much for supporting this non-profit project with a small donation or by sharing your experiences! 👩‍🚀 💚 👨‍🚀</a></li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696250475"><h1 class="widget-title">Warnings</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../../../../category/warnings/scam-alert-known-scammers/index.html" title=" will never send you anything, they will just act friendly to steal your money!">Scammers</a>
+ will never send you anything, they will just act friendly to steal your money!</li>
+<li><a href="../../../../../category/warnings/toxic-substances/index.html" title="and you might end up in hospital.">Toxic / Mislabeled Substances</a>
+and you might end up in hospital.</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696250474"><h1 class="widget-title">Shop Reviews</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../../../../category/trusted-shop-reviews/index.html">All Shop Reviews</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/europe/index.html">Europe</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/china/index.html">China</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/USA/index.html">USA</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/canada/index.html">Canada</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/ships-to-the-uk/index.html">Ships to the UK</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/ships-to-the-usa/index.html">Ships to the USA</a></li>
+<li><a href="../../../../../category/trusted-shop-reviews/ships-to-australia/index.html" title="Shops that ship to Australia">Ships to Australia</a></li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-696711682"><h1 class="widget-title">Trusted Shops</h1>
+<ul class="xoxo blogroll">
+<li><a href="../../../../../trusted-research-chemical-shops/index.html" title="list of reliable shops and legit email vendors">Trusted RC Vendors</a>
+list of reliable shops and legit email vendors</li>
+<li><a href="http://buy.research-chemicals.online/" rel="me" target="_blank" title="Buy Research Chemicals Online – mobile friendly version">Trusted Shops mobile edition</a>
+Buy Research Chemicals Online – mobile friendly version</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-701516573"><h1 class="widget-title">Friendly forums</h1>
+<ul class="xoxo blogroll">
+<li><a href="https://www.psychonaut.fr/" rel="colleague">psychonaut.fr</a></li>
+<li><a href="https://forum.drug.cafe/" rel="colleague" target="_blank">drug.cafe</a></li>
+<li><a href="https://www.reddit.com/r/RCVPBACKUP/" rel="colleague" target="_blank">RC Vendor Police</a></li>
+<li><a href="#" rel="colleague" target="_blank">Trustpilot</a></li>
+<li><a href="https://twitter.com/rc_scene" rel="me" target="_blank">Twitter</a></li>
+</ul>
+</aside>
+</div><!-- #secondary -->
+<div class="widget-area sidebar-right" id="tertiary" role="complementary">
+<aside class="widget widget_search" id="search-7"><h1 class="widget-title">Find</h1><form action="https://rc-scene.com/" class="search-form" method="get" role="search">
+<label>
+<span class="screen-reader-text">Search for:</span>
+<input class="search-field" name="s" placeholder="Search …" type="search" value=""/>
+</label>
+<input class="search-submit" type="submit" value="Search"/>
+</form></aside><aside class="widget widget_links" id="linkcat-697708460"><h1 class="widget-title">Knowledge</h1>
+<ul class="xoxo blogroll">
+<li><a href="#" title="What are these? Substances, History, Highlights, and Future Outlook. Latest update: What do Chinese labs look like?">Research Chemicals explained</a>
+What are these? Substances, History, Highlights, and Future Outlook. Latest update: What do Chinese labs look like?</li>
+<li><a href="https://thedrugclassroom.com/" target="_blank" title="Substance Information Videos">The Drug Classroom (Videos)</a>
+Substance Information Videos</li>
+<li><a href="https://www.youtube.com/channel/UCCwC_kDHfa5h7kF71tl19TQ" target="_blank" title="Scientists working in the field of drug abuse and substance information. You may ask them questions, too!">Global Drug Survey on YouTube</a>
+Scientists working in the field of drug abuse and substance information. You may ask them questions, too!</li>
+<li><a href="https://twitter.com/NPSDiscovery" target="_blank" title="Novel Psychoactive Substances. Forensic Toxicology. Forensic Chemistry. Public Health. Public Safety.">NPS Discovery</a>
+Novel Psychoactive Substances. Forensic Toxicology. Forensic Chemistry. Public Health. Public Safety.</li>
+<li><a href="https://twitter.com/Cayman_Forensic" title="Articles about all kinds of chems and substance classes, including Research Chemicals">Cayman Forensic</a>
+Articles about all kinds of chems and substance classes, including Research Chemicals</li>
+</ul>
+</aside>
+<aside class="widget widget_links" id="linkcat-695089967"><h1 class="widget-title">Prevention &amp; Harm Reduction</h1>
+<ul class="xoxo blogroll">
+<li><a href="https://drugsdata.org/" target="_blank" title="An overview of (problematic) drug samples tested in the US, UK, Switzerland, Spain, Slovenia, Scotland, Portugal, Italy, Germany and Austria.">DrugsData.org (Erowid Center)</a>
+An overview of (problematic) drug samples tested in the US, UK, Switzerland, Spain, Slovenia, Scotland, Portugal, Italy, Germany and Austria.</li>
+<li><a href="https://www.getsmartaboutdrugs.gov/" target="_blank" title="A DEA Resource for Parents, Educators &amp; Caregivers">Get Smart About Drugs</a>
+A DEA Resource for Parents, Educators &amp; Caregivers</li>
+<li><a href="https://getyourdrugstested.com/" target="_blank" title="offer anonymous and free drug testing for Canadian citizens.">Get Your Drugs Tested Vancouver (CAN)</a>
+offer anonymous and free drug testing for Canadian citizens.</li>
+<li><a href="https://www.justthinktwice.gov/" title="Get the facts about drugs">Just Think Twice</a>
+Get the facts about drugs</li>
+<li><a href="https://www.deadiversion.usdoj.gov/synthetic_drugs/index.html" title="Help to protect yourself, your family, and your local community from the threat of Synthetic Drugs">Synhetic Drugs Consumer Alert</a>
+Help to protect yourself, your family, and your local community from the threat of Synthetic Drugs</li>
+</ul>
+</aside>
+<aside class="widget widget_nav_menu" id="nav_menu-9"><h1 class="widget-title">About</h1><div class="menu-footer-container"><ul class="menu" id="menu-footer"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8940" id="menu-item-8940"><a href="../../../../../contact/index.html">Contact &amp; PGP Key</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8944" id="menu-item-8944"><a href="../../../../../terms-of-use-disclaimer/index.html">Terms of Use &amp; Disclaimer</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8943" id="menu-item-8943"><a href="../../../../../privacy-policy-cookies/index.html">Privacy Policy &amp; Cookies</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8951" id="menu-item-8951"><a href="../../../../../testimonials-they-say/index.html">Testimonials</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8946" id="menu-item-8946"><a href="../../../../../about/index.html">Why?</a></li>
+</ul></div></aside><aside class="widget widget_text" id="text-3"> <div class="textwidget"><aside id="copyright">
+<p style="margin:0;font-family:Calibri;font-size:11pt;"><strong>© 2020</strong></p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">_______________</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;"><strong>KØMPRØMÆT</strong></p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">——————————–</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">——————————–</p>
+<p style="margin:0;font-family:Calibri;font-size:11pt;">—</p>
+</aside>
+</div>
+</aside></div><!-- #tertiary -->
+</div><!-- #content -->
+<footer class="site-footer" id="colophon" role="contentinfo">
+<div class="site-info">
+<a href="https://wordpress.com/?ref=footer_custom_com" rel="nofollow">Website Built with WordPress.com</a>.
+			
+					</div><!-- .site-info -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+<!-- -->
+<script id="grofiles-cards-js" src="#"></script>
+<script id="wpgroho-js-extra">
+var WPGroHo = {"my_hash":""};
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+<div class="grofile-hash-map-65767fcfdf032783efa707674533f7cf">
+</div>
+<div class="grofile-hash-map-9727f0a7a4583947da8e30d951049d03">
+</div>
+<div class="grofile-hash-map-d68cc1768ca5287ab6e81e8235c7c01d">
+</div>
+<div class="grofile-hash-map-4da1ba630132f85c7e6726b7347c8153">
+</div>
+<div class="grofile-hash-map-65767fcfdf032783efa707674533f7cf">
+</div>
+<div class="grofile-hash-map-e86e64939714fc6f8b26748be6b582f6">
+</div>
+<div class="grofile-hash-map-76b3717fad8808cfa6a6c720c1f6916b">
+</div>
+<div class="grofile-hash-map-7332465392d1822da528f59965b5e772">
+</div>
+<div class="grofile-hash-map-c9cc8d5fd8964048e128a4ef6bb8ff78">
+</div>
+<div class="grofile-hash-map-baafda7c01c7d806aec97ceb6370a76d">
+</div>
+<div class="grofile-hash-map-7aeb10ec4d0b6df9b0521027979a6b4c">
+</div>
+<div class="grofile-hash-map-ce8f0b4ecd2205a56f4b07148a7e7872">
+</div>
+<div class="grofile-hash-map-53fe86ca6dc26c9de8abb6feddd8be17">
+</div>
+</div>
+<script id="highlander-comments-js-extra">
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/researchchemicalscene.wordpress.com\/public.api\/connect\/?action=request&domain=rc-scene.com","logoutURL":"https:\/\/researchchemicalscene.wordpress.com\/wp-login.php?action=logout&_wpnonce=81938c66c4","homeURL":"https:\/\/rc-scene.com\/","postID":"7547","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script src="https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j" type="text/javascript"></script>
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20201002";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+<div id="carousel-reblog-box">
+<form action="#" name="carousel-reblog">
+<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+<select id="carousel-reblog-to-blog-id" name="carousel-reblog-to-blog-id">
+</select>
+<div class="submit">
+<span class="canceltext"><a class="cancel" href="../../../../../index.html">Cancel</a></span>
+<input class="button" id="carousel-reblog-submit" name="carousel-reblog-submit" type="submit" value="Reblog Post"/>
+<input id="carousel-reblog-blog-id" type="hidden" value="172868107"/>
+<input id="carousel-reblog-blog-url" type="hidden" value="https://rc-scene.com"/>
+<input id="carousel-reblog-blog-title" type="hidden" value="RC SCENE - Safe NOT Scam! Research Chemicals"/>
+<input id="carousel-reblog-post-url" type="hidden" value=""/>
+<input id="carousel-reblog-post-title" type="hidden" value=""/>
+</div>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="d469f3bb33"/><input name="_wp_http_referer" type="hidden" value="/2020/08/01/legit_rc-usa-photos-mini-review-shop-discussion/comment-page-1/"/> </form>
+<div class="arrow"></div>
+</div>
+<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/rc-scene.com\/2020\/08\/01\/legit_rc-usa-photos-mini-review-shop-discussion\/":7547};
+	</script>
+<aside class="widget widget_eu_cookie_law_widget" id="eu_cookie_law_widget-6">
+<div class="hide-on-time" data-consent-expiration="365" data-hide-timeout="30" id="eu-cookie-law">
+<form method="post">
+<input class="accept" type="submit" value="Close and accept"/>
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br/>
+To find out more, including how to control cookies, see here:
+				<a href="https://automattic.com/cookies" rel="nofollow">
+			Cookie Policy		</a>
+</form>
+</div>
+</aside><link href="https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1592560282h&amp;cssminify=yes" id="all-css-0-3" media="all" rel="stylesheet" type="text/css"/>
+<script id="comment-like-js-extra">
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script id="jetpack-carousel-js-extra">
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/rc-scene.com\/wp-admin\/admin-ajax.php","nonce":"57d8dd6ee9","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"white","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/researchchemicalscene.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Frc-scene.com%2F2020%2F08%2F01%2Flegit_rc-usa-photos-mini-review-shop-discussion%2F","blog_id":"172868107","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=172868107&v=wpcom&tz=-8&user_id=0&subd=researchchemicalscene","is_public":"1","reblog_enabled":""};
+</script>
+<script id="google-translate-init-js-extra">
+var _wp_google_translate_widget = {"lang":"en","layout":"0"};
+</script>
+<script src="https://s0.wp.com/_static/??-eJyVkd1OwzAMhV+I1GMTRVwgHgWlqde5+VXsrPD2pJoG3SpVQ7mJjvP5nNgwJWViEAwCI0OPZzKYvpqRn2BR8kUlVwYKDCZ6XyXlyCLPjKMOeKKE/4FuhHvwj+pcNJZh39QDPbFc2Itc4eEkXVyllRP6apNKBwazLiHOWNBnGrRQDI+9Z0upWgSrjtEUVkf6NaJgXOlvf5Ixue/G06r7YgwT9QMKA5ZajZZQOT2BoE9OC97pG31GlKSNhc8aBGQiEcxKyGONu7UG3dd8qtMZvObK1JuSXDutVrDcnc6xMLqrq7oKW0aW2KOoQ7O7hDzG7B8YzBDj4HDOFHgeyUqoPT78+3O7O7zu27eXdvwBAXcG4g==" type="text/javascript"></script>
+<script id="google-translate-js" src="#"></script>
+<script id="sharing-js-js-extra">
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/post-flair/sharing/sharing.js?m=1606478945h" type="text/javascript"></script>
+<script type="text/javascript">
+var windowOpen;
+			document.body.addEventListener( 'click', function ( event ) {
+				if ( event.target &&
+						( event.target.matches && event.target.matches( 'a.share-twitter' ) ) ||
+						( event.target.msMatchesSelector && event.target.msMatchesSelector( 'a.share-twitter' ) ) ) {
+					// If there's another sharing window open, close it.
+					if ( typeof windowOpen !== 'undefined' ) {
+						windowOpen.close();
+					}
+					windowOpen = window.open( event.target.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+					return false;
+				}
+			} );
+var windowOpen;
+			document.body.addEventListener( 'click', function ( event ) {
+				if ( event.target &&
+						( event.target.matches && event.target.matches( 'a.share-facebook' ) ) ||
+						( event.target.msMatchesSelector && event.target.msMatchesSelector( 'a.share-facebook' ) ) ) {
+					// If there's another sharing window open, close it.
+					if ( typeof windowOpen !== 'undefined' ) {
+						windowOpen.close();
+					}
+					windowOpen = window.open( event.target.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+					return false;
+				}
+			} );
+var windowOpen;
+			document.body.addEventListener( 'click', function ( event ) {
+				if ( event.target &&
+						( event.target.matches && event.target.matches( 'a.share-telegram' ) ) ||
+						( event.target.msMatchesSelector && event.target.msMatchesSelector( 'a.share-telegram' ) ) ) {
+					// If there's another sharing window open, close it.
+					if ( typeof windowOpen !== 'undefined' ) {
+						windowOpen.close();
+					}
+					windowOpen = window.open( event.target.getAttribute( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+					return false;
+				}
+			} );
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script async="" defer="" src="#" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'172868107','blog_tz':'-8','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'172868107','v':'wpcom','tz':'-8','user_id':'0','post':'7547','subd':'researchchemicalscene'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGQ9PzdhTnQ1KytscD9vXVh1ek1fUWVpNUIlemtsTG9+cDZNa01VZHQ0cHBLRHFNWFFMaGlnbXV4QitHSEVFcUtwNHMrM0ImQyZtVGItMUUtZXB2fHBtXWdEUk5bSThHaDEyNkMxc1NVP2k3dE9vLi1Rc3VHYUMzLGw5bktEMUxoUzAwNVtqMkhVSWk9eXppW3ErSzY0LUdbM29ONldGeTUxR0UvTGQxQ081XUdyOFRmYUxGWVdlcTR1SWtNTUh6LDFYTT0uNSxrcEFKcWtqfnVJSVstSnhuW25RaXxbLmRdMkM3RktWOTlDeW41WS5uZHxhamdPZyw3XT14LnFLMF9w'}]);
+_stq.push([ 'clickTrackerInit', '172868107', '7547' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
